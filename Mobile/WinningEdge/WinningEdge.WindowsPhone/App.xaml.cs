@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,17 @@ namespace WinningEdge
     /// </summary>
     public sealed partial class App : Application
     {
+        /*public static MobileServiceClient MobileService = new MobileServiceClient(
+          "http://localhost:50512"
+);*/
+         // Use this constructor instead after publishing to the cloud
+         public static MobileServiceClient MobileService = new MobileServiceClient(
+              "https://winningedge.azure-mobile.net/",
+              "WDXoKJaqMiTMDfEgmQFclxtqLLvtEP94"
+        );
+        
+        
+        
         private TransitionCollection transitions;
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinningEdge", "WinningEdge\WinningEdge.csproj", "{42BA81CA-B158-42AC-912B-614819FC3C85}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WinningEdge.Shared", "WinningEdge.Shared\WinningEdge.Shared.shproj", "{7A2A5C6E-3045-4753-A677-777AA6E26A8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinningEdge.WindowsPhone", "WinningEdge.WindowsPhone\WinningEdge.WindowsPhone.csproj", "{72D786C6-2D6B-4231-AF8B-C297CAA81B3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEapi", "WEapi\WEapi.csproj", "{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -72,6 +74,16 @@ Global
 		{72D786C6-2D6B-4231-AF8B-C297CAA81B3C}.Release|x86.ActiveCfg = Release|x86
 		{72D786C6-2D6B-4231-AF8B-C297CAA81B3C}.Release|x86.Build.0 = Release|x86
 		{72D786C6-2D6B-4231-AF8B-C297CAA81B3C}.Release|x86.Deploy.0 = Release|x86
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Release|x64.ActiveCfg = Release|Any CPU
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +92,6 @@ Global
 		{42BA81CA-B158-42AC-912B-614819FC3C85} = {F434E4AA-502D-4C92-9B37-D574C02FA054}
 		{7A2A5C6E-3045-4753-A677-777AA6E26A8D} = {F434E4AA-502D-4C92-9B37-D574C02FA054}
 		{72D786C6-2D6B-4231-AF8B-C297CAA81B3C} = {F434E4AA-502D-4C92-9B37-D574C02FA054}
+		{890AE21C-A49D-4DC1-9F55-E732D9C2B7CB} = {F434E4AA-502D-4C92-9B37-D574C02FA054}
 	EndGlobalSection
 EndGlobal

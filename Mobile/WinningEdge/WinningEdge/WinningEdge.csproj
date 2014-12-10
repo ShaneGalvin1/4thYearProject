@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{42ba81ca-b158-42ac-912b-614819fc3c85}</ProjectGuid>
+    <ProjectGuid>{42BA81CA-B158-42AC-912B-614819FC3C85}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WinningEdge</RootNamespace>
@@ -117,6 +117,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="packages.config" />
     <None Include="WinningEdge_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
