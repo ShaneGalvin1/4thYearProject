@@ -1,1 +1,0 @@
-C:\Users\Shane\Documents\Visual Studio 2013\Projects\WinningEdge_Windows_CS\WinningEdge\WinningEdge.Windows\WinningEdge.Windows.csproj;neutral

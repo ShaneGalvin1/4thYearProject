@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="weservice" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^c:\\users\\shane\\documents\\visual\ studio\ 2013\\Projects\\WEService\\WEService\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^c:\\users\\shane\\documents\\visual\ studio\ 2013\\Projects\\WEService\\WEService\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="WEServiceContext-Web.config Connection String" description="" value="Data Source=tcp:wtsjxqlnuv.database.windows.net,1433;Initial Catalog=weservice_db;User Id=sg@wtsjxqlnuv;Password=WinningEdge#48" tags="">
+    <parameterEntry kind="XmlFile" scope="c:\\users\\shane\\documents\\visual\ studio\ 2013\\Projects\\WEService\\WEService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='WEServiceContext']/@connectionString" />
+  </parameter>
+</parameters>
