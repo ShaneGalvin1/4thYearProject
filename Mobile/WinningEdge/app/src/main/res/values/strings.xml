@@ -1,6 +1,31 @@
 <resources>
     <string name="app_name">WinningEdge</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="livescore">Live Score</string>
+    <string name="goals">Goals</string>
+    <string name="points">Points</string>
+    <string name="home">Home</string>
+    <string name="away">Away</string>
+    <string name="dash">-</string>
+
+    <string name="setup">Match Setup</string>
+    <string name="football">Football</string>
+    <string name="hurling">Hurling</string>
+
+    <string name="scoreOnly">Score Only</string>
+    <string name="scoreStats">Score + Stats</string>
+
+    <string name="homeTeam">Home Team</string>
+    <string name="awayTeam">Away Team</string>
+    <string name="team">Choose team to record stats for:</string>
+
     <string name="action_settings">Settings</string>
+    <string name="title_activity_setup">SetupActivity</string>
+
+
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="start">Start Match</string>
+
 </resources>

@@ -1,9 +1,13 @@
 package com.example.shane.winningedge;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.TextView;
@@ -13,14 +17,123 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 
 public class MainActivity extends ActionBarActivity {
 
+    Match m;
+    int id;
+    Score score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new MyTask(this).execute();
+        new getNextId(this).execute();
+        final TextView hGoals = (TextView) findViewById(R.id.hGoals);
+        final TextView hPoints = (TextView) findViewById(R.id.hPoints);
+        final TextView aGoals = (TextView) findViewById(R.id.aGoals);
+        final TextView aPoints = (TextView) findViewById(R.id.aPoints);
+
+        Intent i = getIntent();
+        m = (Match) i.getSerializableExtra("Match");
+        final List<Score> sList = new ArrayList<Score>();
+        new CreateMatch(this).execute();
+        Button homeGoal = (Button) findViewById(R.id.homeGoal);
+        homeGoal.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String s = hGoals.getText().toString();
+                int i = Integer.parseInt(s);
+                i++;
+                hGoals.setText(i+"");
+                score = new Score(id, true, m.getMatchId());
+                sList.add(score);
+                m.setScores(sList);
+                new Update(getParent()).execute();
+            }
+        });
+        Button homePoint = (Button) findViewById(R.id.homePoint);
+        homePoint.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String s = hPoints.getText().toString();
+                int i = Integer.parseInt(s);
+                i++;
+                hPoints.setText(i+"");
+                score = new Score(id, false, m.getMatchId());
+                sList.add(score);
+                m.setScores(sList);
+                new Update(getParent()).execute();
+            }
+        });
+        Button awayGoal = (Button) findViewById(R.id.awayGoal);
+        awayGoal.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String s = aGoals.getText().toString();
+                int i = Integer.parseInt(s);
+                i++;
+                aGoals.setText(i+"");
+                m.setOppGoals(m.getOppGoals()+1);
+                new Update(getParent()).execute();
+            }
+        });
+        Button awayPoint = (Button) findViewById(R.id.awayPoint);
+        awayPoint.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String s = aPoints.getText().toString();
+                int i = Integer.parseInt(s);
+                i++;
+                aPoints.setText(i+"");
+                m.setOppPoints(m.getOppPoints()+1);
+                new Update(getParent()).execute();
+            }
+        });
+
+        final Button matchEvent = (Button) findViewById(R.id.matchEvent);
+        matchEvent.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(matchEvent.getText().equals("Start Match"))
+                {
+                    m.setInPlay(true);
+                    new Update(getParent()).execute();
+                    matchEvent.setText("Half Time");
+                }
+                else if(matchEvent.getText().equals("Half Time"))
+                {
+                    m.setInPlay(false);
+                    m.setHalfTime(true);
+                    new Update(getParent()).execute();
+                    matchEvent.setText("Start Second Half");
+                }
+                else if(matchEvent.getText().equals("Start Second Half"))
+                {
+                    m.setInPlay(true);
+                    m.setHalfTime(false);
+                    new Update(getParent()).execute();
+                    matchEvent.setText("Full Time");
+                }
+                else if(matchEvent.getText().equals("Full Time"))
+                {
+                    m.setInPlay(false);
+                    m.setFullTime(true);
+                    new Update(getParent()).execute();
+                    matchEvent.setText("Exit Match");
+                }
+                else
+                {
+
+                    // Finish this activity
+                    finish();
+
+                    // Start the main activity
+                    Intent i = new Intent(getApplicationContext(), SetupActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
     }
 
 
@@ -46,18 +159,20 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class MyTask extends AsyncTask<Void, Void, String> {
+    private class CreateMatch extends AsyncTask<Void, Void, String> {
         private Activity a;
 
-        public MyTask(Activity a) {
+        public CreateMatch(Activity a) {
             this.a = a;
         }
         @Override
         protected String doInBackground(Void... params) {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
             try {
-                return restTemplate.getForObject("http://winedge.cloudapp.net/api/values/1",String.class);
+                m = restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches/new", m, Match.class);
+                return "";
             } catch(HttpClientErrorException e) {
                 return "HTTP Error";
             } catch(RestClientException e) {
@@ -66,9 +181,70 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        @Override
+        //@Override
         protected void onPostExecute(String s) {
-            ((TextView) a.findViewById(R.id.text)).setText(s);
+            // ((TextView) a.findViewById(R.id.text)).setText(s);
         }
     }
+
+
+    private class Update extends AsyncTask<Void, Void, String> {
+        private Activity a;
+
+        public Update(Activity a) {
+            this.a = a;
+        }
+        @Override
+        protected String doInBackground(Void... params) {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            try {
+                restTemplate.put("http://weservice.azurewebsites.net/api/Matches/" + m.getMatchId(),m, Match.class);
+                //return restTemplate.getForObject("http://weservice.azurewebsites.net/api/Matches/Name/1", String.class);
+                return "";
+            } catch(HttpClientErrorException e) {
+                return "HTTP Error";
+            } catch(RestClientException e) {
+                return "REST Error";
+            }
+
+        }
+
+        //@Override
+        protected void onPostExecute(String s) {
+           // ((TextView) a.findViewById(R.id.text)).setText(s);
+        }
+    }
+
+    private class getNextId extends AsyncTask<Void, Void, String> {
+        private Activity a;
+
+        public getNextId(Activity a) {
+            this.a = a;
+        }
+        @Override
+        protected String doInBackground(Void... params) {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            try {
+                return restTemplate.getForObject("http://weservice.azurewebsites.net/api/Scores/id", String.class);
+            } catch(HttpClientErrorException e) {
+                return "HTTP Error";
+            } catch(RestClientException e) {
+                return "REST Error";
+            }
+
+        }
+
+        //@Override
+        protected void onPostExecute(String s) {
+            //id = Integer.getInteger(s);
+        }
+    }
+
+
+
 }
+

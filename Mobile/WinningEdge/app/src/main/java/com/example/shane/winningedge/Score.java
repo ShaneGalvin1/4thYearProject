@@ -4,7 +4,6 @@ import java.util.UUID;
  * Created by Shane on 18/03/2015.
  */
 public class Score {
-    //String uniqueID = UUID.randomUUID().toString();
     private int mScoreId;
     public void setScoreId(int id)
     {
@@ -60,7 +59,7 @@ public class Score {
     {
         mDistance = in;
     }
-    public int getDistanced()
+    public int getDistance()
     {
         return mDistance;
     }
@@ -74,5 +73,26 @@ public class Score {
     public int getMatchId()
     {
         return mMatchId;
+    }
+
+    public Score(int id, boolean g, boolean p, int m, int s, int d, int mId)
+    {
+        setScoreId(id);
+        setGoal(g);
+        setFromPlay(p);
+        setMins(m);
+        setSecs(s);
+        setDistance(d);
+        setMatchId(mId);
+    }
+    public Score(int id, boolean g, int mId)
+    {
+        setScoreId(id);
+        setGoal(g);
+        setMatchId(mId);
+    }
+    public Score()
+    {
+
     }
 }

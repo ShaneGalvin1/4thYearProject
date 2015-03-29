@@ -1,0 +1,156 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.shane.winningedge.SetupActivity">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/setup"
+                android:textSize="30dp"
+                android:id="@+id/setupTitle"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <ToggleButton
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textOn="@string/football"
+                android:textOff="@string/football"
+                android:id="@+id/toggleFootball"
+                android:layout_below="@+id/setupTitle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="38dp"
+                android:checked="true" />
+
+            <ToggleButton
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textOn="@string/hurling"
+                android:textOff="@string/hurling"
+                android:id="@+id/toggleHurling"
+                android:layout_alignTop="@+id/toggleFootball"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ToggleButton
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textOn="@string/scoreOnly"
+                android:textOff="@string/scoreOnly"
+                android:id="@+id/toggleScore"
+                android:layout_below="@+id/toggleFootball"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="50dp"
+                android:checked="true" />
+
+            <ToggleButton
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textOn="@string/scoreStats"
+                android:textOff="@string/scoreStats"
+                android:id="@+id/toggleStat"
+                android:layout_alignBottom="@+id/toggleScore"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="@string/homeTeam"
+                android:ems="10"
+                android:id="@+id/homeTeam"
+                android:layout_below="@+id/toggleScore"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="@string/awayTeam"
+                android:ems="10"
+                android:id="@+id/awayTeam"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/homeTeam"
+                android:layout_alignLeft="@+id/homeTeam"
+                android:layout_alignStart="@+id/homeTeam" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/homeTeam"
+                android:id="@+id/checkHome"
+                android:layout_below="@+id/chooseTeam"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:visibility="gone" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/awayTeam"
+                android:id="@+id/checkAway"
+                android:layout_below="@+id/chooseTeam"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:id="@+id/setupCancel"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/checkHome"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm"
+                android:id="@+id/setupConfirm"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/team"
+                android:id="@+id/chooseTeam"
+                android:layout_below="@+id/awayTeam"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

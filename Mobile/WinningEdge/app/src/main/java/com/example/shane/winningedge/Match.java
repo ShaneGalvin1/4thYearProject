@@ -1,236 +1,293 @@
 package com.example.shane.winningedge;
 
+import android.support.annotation.NonNull;
+
+import org.joda.time.JodaTimePermission;
+
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by Shane on 18/03/2015.
  */
-public class Match {
+@SuppressWarnings("serial")
+public class Match implements Serializable {
 
     // Associates matches with user
-    private int mUserId;
-    public void setUserId(int id)
+    // Foreign Key
+    private int userId;
+    public void setUserId(int in)
     {
-        mUserId = id;
+        this.userId = in;
     }
     public int getUserId()
     {
-        return mUserId;
+        return userId;
     }
     // Match Info
-    private int mMatchId;
-    public void setMatchId(int id)
+    private int matchId;
+    public void setMatchId(int in)
     {
-        mMatchId = id;
+        this.matchId = in;
     }
     public int getMatchId()
     {
-        return mMatchId;
+        return matchId;
     }
-
-    private Date mMatchTime;
-    public void setMatchTime(Date time)
+    private Date matchTime;
+    public void setMatchTime(Date d)
     {
-        mMatchTime = time;
+        this.matchTime = d;
     }
     public Date getMatchTime()
     {
-        return mMatchTime;
+        return matchTime;
     }
 
-    private String mOppostion;
-    public void setOpposition(String opp)
+    private String team;
+    public void setTeam(String s)
     {
-        mOppostion = opp;
+        this.team = s;
     }
-    public String getOpposition()
+    public String getTeam()
     {
-        return mOppostion;
+        return team;
     }
 
+    private String oppostion;
+    public void setOppostion(String s)
+    {
+        this.oppostion = s;
+    }
+    public String getOppostion()
+    {
+        return oppostion;
+    }
+    private boolean football;
+    public void setFootball(boolean b)
+    {
+        this.football = b;
+    }
+    public boolean getFootball()
+    {
+        return football;
+    }
+    // Variables for livescore
+    private boolean inPlay;
+    public void setInPlay(boolean b)
+    {
+        this.inPlay = b;
+    }
+    public boolean getInPlay()
+    {
+        return inPlay;
+    }
+
+    private boolean halfTime;
+    public void setHalfTime(boolean b)
+    {
+        this.halfTime = b;
+    }
+    public boolean getHalfTime()
+    {
+        return halfTime;
+    }
+
+    private boolean fullTime;
+    public void setFullTime(boolean b)
+    {
+        this.fullTime = b;
+    }
+    public boolean getFullTime()
+    {
+        return fullTime;
+    }
     // Scores
-    private List<Score> mScores;
+    private List<Score> scores;
     public void setScores(List<Score> s)
     {
-        mScores = s;
+        this.scores = s;
     }
     public List<Score> getScores()
     {
-        return mScores;
+        return scores;
     }
     // Opposition Scores
-    private int mOppGoals;
+    private int oppGoals;
     public void setOppGoals(int in)
     {
-        mOppGoals = in;
+        this.oppGoals = in;
     }
     public int getOppGoals()
     {
-        return mOppGoals;
+        return oppGoals;
     }
 
-    private int mOppPoints;
+    private int oppPoints;
     public void setOppPoints(int in)
     {
-        mOppPoints = in;
+        this.oppPoints = in;
     }
     public int getOppPoints()
     {
-        return mOppPoints;
+        return oppPoints;
     }
     // Shooting
-    private int mShots;
+    private int shots;
     public void setShots(int in)
     {
-        mShots = in;
+        this.shots = in;
     }
     public int getShots()
     {
-        return mShots;
+        return shots;
     }
 
-    private int mWides;
+    private int wides;
     public void setWides(int in)
     {
-        mWides = in;
+        this.wides = in;
     }
     public int getWides()
     {
-        return mWides;
+        return wides;
     }
 
-    private int mShorts;
+    private int shorts;
     public void setShorts(int in)
     {
-        mShorts = in;
+        this.shorts = in;
     }
     public int getShorts()
     {
-        return mShorts;
+        return shorts;
     }
-
     // Tackling
-    private int mFouls;
+    private int fouls;
     public void setFouls(int in)
     {
-        mFouls = in;
+        this.fouls = in;
     }
     public int getFouls()
     {
-        return mFouls;
+        return fouls;
     }
 
-    private int mScoresFromFouls;
+    private int scoresFromFouls;
     public void setScoresFromFouls(int in)
     {
-        mScoresFromFouls = in;
+        this.scoresFromFouls = in;
     }
     public int getScoresFromFouls()
     {
-        return mScoresFromFouls;
+        return scoresFromFouls;
     }
 
-    private int mBlocks;
+    private int blocks;
     public void setBlocks(int in)
     {
-        mBlocks = in;
+        this.blocks = in;
     }
     public int getBlocks()
     {
-        return mBlocks;
+        return blocks;
     }
 
-    private int mHooks;
+    private int hooks;
     public void setHooks(int in)
     {
-        mHooks = in;
+        this.hooks = in;
     }
     public int getHooks()
     {
-        return mHooks;
+        return hooks;
     }
-
     // Passing
-    private int mSuccessfulPasses;
+    private int successfulPasses;
     public void setSuccessfulPasses(int in)
     {
-        mSuccessfulPasses = in;
+        this.successfulPasses = in;
     }
-    public int getSuccessfulPassess()
+    public int getSuccessfulPasses()
     {
-        return mSuccessfulPasses;
+        return successfulPasses;
     }
 
-    private int mUnsuccessfulPasses;
+    private int unsuccessfulPasses;
     public void setUnsuccessfulPasses(int in)
     {
-        mUnsuccessfulPasses = in;
+        this.unsuccessfulPasses = in;
     }
     public int getUnsuccessfulPasses()
     {
-        return mUnsuccessfulPasses;
+        return unsuccessfulPasses;
     }
 
-    private int mSuccessfulHandPasses;
+    private int successfulHandPasses;
     public void setSuccessfulHandPasses(int in)
     {
-        mSuccessfulHandPasses = in;
+        this.successfulHandPasses = in;
     }
     public int getSuccessfulHandPasses()
     {
-        return mSuccessfulHandPasses;
+        return successfulHandPasses;
     }
 
-    private int mUnsuccessfulHandPasses;
+    private int unsuccessfulHandPasses;
     public void setUnsuccessfulHandPasses(int in)
     {
-        mUnsuccessfulHandPasses = in;
+        this.unsuccessfulHandPasses = in;
     }
     public int getUnsuccessfulHandPasses()
     {
-        return mUnsuccessfulHandPasses;
+        return unsuccessfulHandPasses;
     }
-
     // Restarts (kickouts/puckouts)
-    private int mOwnWon;
+    private int ownWon;
     public void setOwnWon(int in)
     {
-        mOwnWon = in;
+        this.ownWon = in;
     }
     public int getOwnWon()
     {
-        return mOwnWon;
+        return ownWon;
     }
 
-    private int mOwnLost;
+    private int ownLost;
     public void setOwnLost(int in)
     {
-        mOwnLost = in;
+        this.ownLost = in;
     }
-    public int getOwnLosts()
+    public int getOwnLost()
     {
-        return mOwnLost;
+        return ownLost;
     }
 
-    private int mOppWon;
+    private int oppWon;
     public void setOppWon(int in)
     {
-        mOppWon = in;
+        this.oppWon = in;
     }
     public int getOppWon()
     {
-        return mOppWon;
+        return oppWon;
     }
 
-    private int mOppLost;
+    private int oppLost;
     public void setOppLost(int in)
     {
-        mOppLost = in;
+        this.oppLost = in;
     }
     public int getOppLost()
     {
-        return mOppLost;
+        return oppLost;
     }
+    public Match()
+    {
 
+    }
 }
