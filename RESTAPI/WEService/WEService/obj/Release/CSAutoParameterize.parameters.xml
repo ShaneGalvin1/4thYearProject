@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="WEServiceContext-Web.config Connection String" description="WEServiceContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=(localdb)\v11.0; Initial Catalog=WEServiceContext-20150317213914; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|WEServiceContext-20150317213914.mdf" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="c:\\users\\shane\\documents\\visual\ studio\ 2013\\Projects\\WEService\\WEService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='WEServiceContext']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Shane\\documents\\visual\ studio\ 2013\\Projects\\WEService\\WEService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='WEServiceContext']/@connectionString" />
   </parameter>
   <parameter name="WEServiceContext_DatabasePublish-Web.config Connection String" description="WEServiceContext_DatabasePublish Connection String used in web.config by the application to access the database." defaultValue="WEServiceContext_DatabasePublish.ConnetionString" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="c:\\users\\shane\\documents\\visual\ studio\ 2013\\Projects\\WEService\\WEService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='WEServiceContext_DatabasePublish']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Shane\\documents\\visual\ studio\ 2013\\Projects\\WEService\\WEService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='WEServiceContext_DatabasePublish']/@connectionString" />
   </parameter>
 </parameters>

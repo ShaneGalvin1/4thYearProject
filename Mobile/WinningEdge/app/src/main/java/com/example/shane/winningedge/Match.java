@@ -38,6 +38,8 @@ public class Match implements Serializable {
     {
         return matchId;
     }
+
+    /*
     private Date matchTime;
     public void setMatchTime(Date d)
     {
@@ -47,6 +49,7 @@ public class Match implements Serializable {
     {
         return matchTime;
     }
+    */
 
     private String team;
     public void setTeam(String s)
@@ -67,6 +70,7 @@ public class Match implements Serializable {
     {
         return oppostion;
     }
+
     private boolean football;
     public void setFootball(boolean b)
     {
@@ -76,6 +80,7 @@ public class Match implements Serializable {
     {
         return football;
     }
+
     // Variables for livescore
     private boolean inPlay;
     public void setInPlay(boolean b)
@@ -106,16 +111,7 @@ public class Match implements Serializable {
     {
         return fullTime;
     }
-    // Scores
-    private List<Score> scores;
-    public void setScores(List<Score> s)
-    {
-        this.scores = s;
-    }
-    public List<Score> getScores()
-    {
-        return scores;
-    }
+
     // Opposition Scores
     private int oppGoals;
     public void setOppGoals(int in)
@@ -289,5 +285,15 @@ public class Match implements Serializable {
     public Match()
     {
 
+    }
+    public Match(String t, String o, boolean b)
+    {
+        //setMatchTime(d);
+        setTeam(t);
+        setOppostion(o);
+        setFootball(b);
+        setFullTime(false);
+        setInPlay(false);
+        setHalfTime(false);
     }
 }

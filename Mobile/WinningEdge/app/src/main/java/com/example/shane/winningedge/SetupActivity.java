@@ -31,7 +31,7 @@ public class SetupActivity extends ActionBarActivity {
         setContentView(R.layout.activity_setup);
 
         new Update(this).execute();
-        new PostScore(this).execute();
+        //new PostScore(this).execute();
 
         final ToggleButton mToggleFootball = (ToggleButton) findViewById(R.id.toggleFootball);
         final ToggleButton mToggleHurling = (ToggleButton) findViewById(R.id.toggleHurling);
@@ -129,7 +129,7 @@ public class SetupActivity extends ActionBarActivity {
                         b = true;
                     }
 
-                    Match m = new Match();
+                    Match m = new Match(h,a,b);
                     if(mToggleScore.isChecked())
                     {
                         // Finish this activity
@@ -187,9 +187,9 @@ public class SetupActivity extends ActionBarActivity {
             String a = "Test Team 2";
             boolean b = false;
 
-            Match m = new Match();
+            Match m = new Match(h,a,b);
             try {
-                restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches/new", m, Match.class);
+                restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches", m, Match.class);
                 //return restTemplate.getForObject("http://weservice.azurewebsites.net/api/Matches/Name/1", String.class);
                 return "Success";
             } catch(HttpClientErrorException e) {

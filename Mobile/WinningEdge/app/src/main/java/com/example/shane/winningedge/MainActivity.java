@@ -52,7 +52,6 @@ public class MainActivity extends ActionBarActivity {
                 hGoals.setText(i+"");
                 score = new Score(id, true, m.getMatchId());
                 sList.add(score);
-                m.setScores(sList);
                 new Update(getParent()).execute();
             }
         });
@@ -65,7 +64,6 @@ public class MainActivity extends ActionBarActivity {
                 hPoints.setText(i+"");
                 score = new Score(id, false, m.getMatchId());
                 sList.add(score);
-                m.setScores(sList);
                 new Update(getParent()).execute();
             }
         });
@@ -171,7 +169,7 @@ public class MainActivity extends ActionBarActivity {
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
             try {
-                m = restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches/new", m, Match.class);
+                m = restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches", m, Match.class);
                 return "";
             } catch(HttpClientErrorException e) {
                 return "HTTP Error";

@@ -20,12 +20,60 @@ namespace WEService.Migrations
         new User() { userId = 2, email = "example@gmail.com", password = "password" }
         );
 
+            context.Scores.AddOrUpdate(x => x.scoreId,
+               new Score()
+               {
+                   scoreId = 1,
+                   goal = false,
+                   fromPlay = true,
+                   mins = 2,
+                   secs = 43,
+                   distance = 21,
+                   matchId = 1
+               },
+               new Score()
+               {
+                   scoreId = 2,
+                   goal = false,
+                   fromPlay = false,
+                   mins = 6,
+                   secs = 45,
+                   distance = 45,
+                   matchId = 1
+               },
+               new Score()
+               {
+                   scoreId = 3,
+                   goal = true,
+                   fromPlay = true,
+                   mins = 2,
+                   secs = 43,
+                   distance = 21,
+                   matchId = 2
+               },
+               new Score()
+               {
+                   scoreId = 4,
+                   goal = false,
+                   fromPlay = true,
+                   mins = 2,
+                   secs = 43,
+                   distance = 21,
+                   matchId = 3
+               }
+           );
+
             context.Matches.AddOrUpdate(x => x.matchId,
                 new Match()
                 {
                     matchId = 1,
-                    matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
+                    //matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
+                    team = "Team 2",
                     oppostion = "Team 1",
+                    football = true,
+                    inPlay = false,
+                    halfTime = false,
+                    fullTime = true,
                     oppGoals = 1,
                     oppPoints = 13,
                     shots = 30,
@@ -48,8 +96,13 @@ namespace WEService.Migrations
                 new Match()
                 {
                     matchId = 2,
-                    matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
+                    //matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
+                    team = "Team 3",
                     oppostion = "Team 2",
+                    football = true,
+                    inPlay = false,
+                    halfTime = false,
+                    fullTime = true,
                     oppGoals = 1,
                     oppPoints = 13,
                     shots = 30,
@@ -72,8 +125,13 @@ namespace WEService.Migrations
                 new Match()
                 {
                     matchId = 3,
-                    matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
+                    //matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
+                    team = "Team 1",
                     oppostion = "Team 3",
+                    football = false,
+                    inPlay = false,
+                    halfTime = false,
+                    fullTime = true,
                     oppGoals = 1,
                     oppPoints = 13,
                     shots = 30,
@@ -95,48 +153,7 @@ namespace WEService.Migrations
                 }
             );
 
-            context.Scores.AddOrUpdate(x => x.scoreId,
-                new Score()
-                {
-                    scoreId = 1,
-                    goal = false,
-                    fromPlay = true,
-                    mins = 2,
-                    secs = 43,
-                    distance = 21,
-                    matchId = 1
-                },
-                new Score()
-                {
-                    scoreId = 2,
-                    goal = false,
-                    fromPlay = false,
-                    mins = 6,
-                    secs = 45,
-                    distance = 45,
-                    matchId = 1
-                },
-                new Score()
-                {
-                    scoreId = 3,
-                    goal = true,
-                    fromPlay = true,
-                    mins = 2,
-                    secs = 43,
-                    distance = 21,
-                    matchId = 2
-                },
-                new Score()
-                {
-                    scoreId = 4,
-                    goal = false,
-                    fromPlay = true,
-                    mins = 2,
-                    secs = 43,
-                    distance = 21,
-                    matchId = 3
-                }
-            );
+           
         }
     }
 }

@@ -13,6 +13,7 @@ using WEService.Models;
 
 namespace WEService.Controllers
 {
+    [RoutePrefix("api/Matches")]
     public class MatchesController : ApiController
     {
         private WEServiceContext db = new WEServiceContext();
@@ -35,6 +36,36 @@ namespace WEService.Controllers
 
             return Ok(match);
         }
+
+        // GET
+        [ResponseType(typeof(String))]
+        [Route("Name/{id:int}")]
+        public async Task<IHttpActionResult> GetTeam(int id)
+        {
+            Match match = await db.Matches.FindAsync(id);
+            if (match == null)
+            {
+                return NotFound();
+            }
+            String s = match.oppostion;
+            return Ok(s);
+        }
+        /*
+        // GET
+        [Route("live")]
+        public List<String> GetLive()       
+        {
+            List<String> list = new List<string>();
+            for(int i = 0; i < db.Matches.Count(); i++)
+            {
+                if(db.Matches.ElementAt(i).matchTime.Date == DateTime.Today.Date)
+                {
+                    list.Add(db.Matches.ElementAt(i).team + " vs. " + db.Matches.ElementAt(i).oppostion);
+                }
+            }
+            return list;
+        }
+        */
 
         // PUT: api/Matches/5
         [ResponseType(typeof(void))]
@@ -75,6 +106,8 @@ namespace WEService.Controllers
         [ResponseType(typeof(Match))]
         public async Task<IHttpActionResult> PostMatch(Match match)
         {
+            //match.matchTime = DateTime.Now;
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -85,6 +118,9 @@ namespace WEService.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = match.matchId }, match);
         }
+
+       
+
 
         // DELETE: api/Matches/5
         [ResponseType(typeof(Match))]

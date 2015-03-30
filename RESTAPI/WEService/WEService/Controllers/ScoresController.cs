@@ -13,6 +13,7 @@ using WEService.Models;
 
 namespace WEService.Controllers
 {
+    [RoutePrefix("api/Scores")]
     public class ScoresController : ApiController
     {
         private WEServiceContext db = new WEServiceContext();
@@ -34,6 +35,13 @@ namespace WEService.Controllers
             }
 
             return Ok(score);
+        }
+
+        // GET: api/Scores/id
+        [Route("id")]
+        public int GetNextId()
+        {
+            return db.Scores.Count()+1;
         }
 
         // PUT: api/Scores/5

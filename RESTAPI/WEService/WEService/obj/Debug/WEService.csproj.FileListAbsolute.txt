@@ -55,6 +55,5 @@ c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\bin\Ant
 c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\ApplicationInsights.config
 c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\WEService.dll
 c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\WEService.pdb
-c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\WEService.csprojResolveAssemblyReference.cache
-c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\WEService.Migrations.Initial.resources
-c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\WEService.csproj.GenerateResource.Cache
+C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\WEService.Migrations.Initial.resources
+C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\WEService.csproj.GenerateResource.Cache

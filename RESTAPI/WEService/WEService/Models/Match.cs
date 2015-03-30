@@ -13,11 +13,14 @@ namespace WEService.Models
         // Match Info
         [Key]
         public int matchId { get; set; }
-        public DateTime matchTime { get; set; }
+        //public DateTime matchTime { get; set; }
+        public String team { get; set; }
         public String oppostion { get; set; }
-
-        // Scores
-        public List<Score> scores;
+        public bool football { get; set; }
+        // Variables for livescore
+        public bool inPlay { get; set; }
+        public bool halfTime { get; set; }
+        public bool fullTime { get; set; }
         // Opposition Scores
         public int oppGoals { get; set; }
         public int oppPoints { get; set; }
@@ -40,5 +43,43 @@ namespace WEService.Models
         public int ownLost { get; set; }
         public int oppWon { get; set; }
         public int oppLost { get; set; }
+        public Match()
+        {
+
+        }
+
+
+        /*
+        public Match(ClientMatch m)
+        {
+            userId = m.userId;
+            matchId = m.matchId;
+            team = m.team;
+            oppostion = m.oppostion;
+            football = m.football;
+            inPlay = m.inPlay;
+            halfTime = m.halfTime;
+            fullTime = m.fullTime;
+            oppGoals = m.oppGoals;
+            oppPoints = m.oppPoints;
+            shots = m.shots;
+            wides = m.wides;
+            shorts = m.shorts;
+            fouls = m.fouls;
+            scoresFromFouls = m.scoresFromFouls;
+            blocks = m.blocks;
+            hooks = m.hooks;
+            successfulPasses = m.successfulPasses;
+            unsuccessfulPasses = m.unsuccessfulPasses;
+            successfulHandPasses = m.successfulHandPasses;
+            unsuccessfulHandPasses = m.unsuccessfulHandPasses;
+            ownWon = m.ownWon;
+            ownLost = m.ownLost;
+            oppWon = m.oppWon;
+            oppLost = m.oppLost;
+
+        }
+
+         */
     }
 }
