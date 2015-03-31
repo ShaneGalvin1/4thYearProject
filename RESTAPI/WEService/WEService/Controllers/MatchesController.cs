@@ -50,22 +50,24 @@ namespace WEService.Controllers
             String s = match.oppostion;
             return Ok(s);
         }
-        /*
+        
         // GET
         [Route("live")]
         public List<String> GetLive()       
         {
             List<String> list = new List<string>();
+            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             for(int i = 0; i < db.Matches.Count(); i++)
             {
-                if(db.Matches.ElementAt(i).matchTime.Date == DateTime.Today.Date)
+                DateTime date = start.AddMilliseconds(db.Matches.ElementAt(i).matchDate).ToLocalTime().Date;
+                if(date == DateTime.Today.Date)
                 {
                     list.Add(db.Matches.ElementAt(i).team + " vs. " + db.Matches.ElementAt(i).oppostion);
                 }
             }
             return list;
         }
-        */
+        
 
         // PUT: api/Matches/5
         [ResponseType(typeof(void))]
@@ -106,7 +108,9 @@ namespace WEService.Controllers
         [ResponseType(typeof(Match))]
         public async Task<IHttpActionResult> PostMatch(Match match)
         {
-            //match.matchTime = DateTime.Now;
+            //long time = match.matchTime.Ticks;
+            //DateTime date = new DateTime(time);
+            //match.matchTime = DateTime.Today;
             
             if (!ModelState.IsValid)
             {
@@ -115,7 +119,7 @@ namespace WEService.Controllers
 
             db.Matches.Add(match);
             await db.SaveChangesAsync();
-
+            
             return CreatedAtRoute("DefaultApi", new { id = match.matchId }, match);
         }
 

@@ -13,7 +13,8 @@ namespace WEService.Models
         // Match Info
         [Key]
         public int matchId { get; set; }
-        //public DateTime matchTime { get; set; }
+
+        public long matchDate { get; set; }
         public String team { get; set; }
         public String oppostion { get; set; }
         public bool football { get; set; }

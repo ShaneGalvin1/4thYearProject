@@ -39,17 +39,17 @@ public class Match implements Serializable {
         return matchId;
     }
 
-    /*
-    private Date matchTime;
-    public void setMatchTime(Date d)
+
+    private long matchDate;
+    public void setMatchDate(long d)
     {
-        this.matchTime = d;
+        this.matchDate = d;
     }
-    public Date getMatchTime()
+    public long getMatchDate()
     {
-        return matchTime;
+        return matchDate;
     }
-    */
+
 
     private String team;
     public void setTeam(String s)
@@ -286,9 +286,9 @@ public class Match implements Serializable {
     {
 
     }
-    public Match(String t, String o, boolean b)
+    public Match(long d, String t, String o, boolean b)
     {
-        //setMatchTime(d);
+        setMatchDate(d);
         setTeam(t);
         setOppostion(o);
         setFootball(b);

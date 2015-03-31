@@ -30,8 +30,6 @@ public class SetupActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
-        new Update(this).execute();
-        //new PostScore(this).execute();
 
         final ToggleButton mToggleFootball = (ToggleButton) findViewById(R.id.toggleFootball);
         final ToggleButton mToggleHurling = (ToggleButton) findViewById(R.id.toggleHurling);
@@ -120,7 +118,7 @@ public class SetupActivity extends ActionBarActivity {
                 else
                 {
                     Calendar currentDate = Calendar.getInstance();
-                    Date d = currentDate.getTime();
+                    long d = currentDate.getTimeInMillis();
                     String h = mHomeTeam.getText().toString();
                     String a = mAwayTeam.getText().toString();
                     boolean b = false;
@@ -129,7 +127,7 @@ public class SetupActivity extends ActionBarActivity {
                         b = true;
                     }
 
-                    Match m = new Match(h,a,b);
+                    Match m = new Match(d,h,a,b);
                     if(mToggleScore.isChecked())
                     {
                         // Finish this activity
@@ -181,13 +179,13 @@ public class SetupActivity extends ActionBarActivity {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             Calendar currentDate = Calendar.getInstance();
-            Date d = currentDate.getTime();
+            long d = currentDate.getTimeInMillis();
 
-            String h = "Test Team 1";
-            String a = "Test Team 2";
-            boolean b = false;
+            String h = "Team 1";
+            String a = "Team 2";
+            boolean b = true;
 
-            Match m = new Match(h,a,b);
+            Match m = new Match(d,h,a,b);
             try {
                 restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches", m, Match.class);
                 //return restTemplate.getForObject("http://weservice.azurewebsites.net/api/Matches/Name/1", String.class);
