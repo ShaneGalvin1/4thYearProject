@@ -37,7 +37,7 @@ namespace WEService.Controllers
             return Ok(match);
         }
 
-        // GET
+        // GET: api/Matches/Name/4
         [ResponseType(typeof(String))]
         [Route("Name/{id:int}")]
         public async Task<IHttpActionResult> GetTeam(int id)
@@ -51,24 +51,56 @@ namespace WEService.Controllers
             return Ok(s);
         }
         
-        // GET
+        // GET: api/Matches/live
+        [ResponseType(typeof(List<String>))]
         [Route("live")]
         public List<String> GetLive()       
         {
+
+            
             List<String> list = new List<string>();
-            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            for(int i = 0; i < db.Matches.Count(); i++)
+            List<Match> mList = new List<Match>();
+            foreach(var row in db.Matches)
             {
-                DateTime date = start.AddMilliseconds(db.Matches.ElementAt(i).matchDate).ToLocalTime().Date;
-                if(date == DateTime.Today.Date)
+                mList.Add(row);
+            }
+
+            foreach(Match m in mList)
+            {
+                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                long l = m.matchDate;
+                DateTime date = start.AddMilliseconds(l);
+                DateTime today = DateTime.Today;
+                if (date.Date == today.Date)
                 {
-                    list.Add(db.Matches.ElementAt(i).team + " vs. " + db.Matches.ElementAt(i).oppostion);
+                    int g = 0;
+                    int p = 0;
+                    foreach(var s in db.Scores)
+                    {
+                        if(s.matchId == m.matchId)
+                        {
+                            if(s.goal == true)
+                            {
+                                g++;
+                            }
+                            else
+                            {
+                                p++;
+                            }
+                        }
+                    }
+
+                    list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
                 }
             }
+            if(!list.Any())
+            {
+                list.Add("No matches played today");
+            }
             return list;
-        }
-        
+        } 
 
+        
         // PUT: api/Matches/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutMatch(int id, Match match)

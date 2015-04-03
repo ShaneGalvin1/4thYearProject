@@ -18,6 +18,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -98,6 +99,9 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if(matchEvent.getText().equals("Start Match"))
                 {
+                    Calendar currentDate = Calendar.getInstance();
+                    long d = currentDate.getTimeInMillis();
+                    m.setMatchDate(d);
                     homeGoal.setEnabled(true);
                     homePoint.setEnabled(true);
                     awayGoal.setEnabled(true);

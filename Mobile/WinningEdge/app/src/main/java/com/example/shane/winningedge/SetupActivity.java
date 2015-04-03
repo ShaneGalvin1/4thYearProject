@@ -188,7 +188,6 @@ public class SetupActivity extends ActionBarActivity {
             Match m = new Match(d,h,a,b);
             try {
                 restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches", m, Match.class);
-                //return restTemplate.getForObject("http://weservice.azurewebsites.net/api/Matches/Name/1", String.class);
                 return "Success";
             } catch(HttpClientErrorException e) {
                 return "HTTP Error";
