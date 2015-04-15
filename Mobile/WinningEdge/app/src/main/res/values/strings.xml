@@ -27,5 +27,17 @@
     <string name="cancel">Cancel</string>
 
     <string name="start">Start Match</string>
+    <string name="title_activity_stat">StatActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="prompt_home">Home Team</string>
+    <string name="prompt_away">Away Team</string>
+
+    <string name="new_reg">New to Winning Edge?</string>
+    <string name="link_reg">Register Here</string>
+    <string name="log">Already Registered?</string>
+    <string name="log_here">Login Here</string>
+
 
 </resources>

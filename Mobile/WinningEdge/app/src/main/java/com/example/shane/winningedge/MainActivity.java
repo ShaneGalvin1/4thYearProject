@@ -28,7 +28,7 @@ import java.util.ListIterator;
 public class MainActivity extends ActionBarActivity {
 
     Match m;
-    int id;
+    int id, sId;
     Score score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,8 @@ public class MainActivity extends ActionBarActivity {
                 int i = Integer.parseInt(s);
                 i++;
                 hGoals.setText(i+"");
-                score = new Score(1, true, id);
+                score = new Score(sId, true, id);
+                sId++;
                 new PostScore(getParent()).execute();
             }
         });
@@ -65,7 +66,8 @@ public class MainActivity extends ActionBarActivity {
                 int i = Integer.parseInt(s);
                 i++;
                 hPoints.setText(i+"");
-                score = new Score(1, false, id);
+                score = new Score(sId, false, id);
+                sId++;
                 new PostScore(getParent()).execute();
             }
         });
@@ -289,7 +291,7 @@ public class MainActivity extends ActionBarActivity {
 
         //@Override
         protected void onPostExecute(String s) {
-            //id = Integer.getInteger(s);
+            sId = Integer.parseInt(s);
         }
     }
 
