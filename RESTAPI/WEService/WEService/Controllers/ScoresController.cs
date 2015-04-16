@@ -8,11 +8,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WEService.Models;
 
 namespace WEService.Controllers
 {
+    //[EnableCors(origins: "http://weservice.azurewebsites.net", headers: "*", methods: "*")]
     [RoutePrefix("api/Scores")]
     public class ScoresController : ApiController
     {

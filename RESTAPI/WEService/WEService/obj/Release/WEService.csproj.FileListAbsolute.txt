@@ -58,3 +58,6 @@ c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Rel
 c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Release\ApplicationInsights.config
 c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Release\WEService.dll
 c:\users\shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Release\WEService.pdb
+C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\bin\System.Web.Cors.dll
+C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\bin\System.Web.Http.Cors.dll
+C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\bin\System.Web.Http.Cors.xml

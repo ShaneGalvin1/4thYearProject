@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">WinningEdge</string>
+    <string name="app_title">Winning Edge</string>
 
     <string name="livescore">Live Score</string>
     <string name="goals">Goals</string>

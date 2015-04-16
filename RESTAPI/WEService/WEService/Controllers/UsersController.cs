@@ -8,11 +8,14 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WEService.Models;
 
 namespace WEService.Controllers
 {
+    //[EnableCors(origins: "http://weservice.azurewebsites.net", headers: "*", methods: "*")]
+    [RoutePrefix("api/Users")]
     public class UsersController : ApiController
     {
         private WEServiceContext db = new WEServiceContext();
@@ -34,6 +37,50 @@ namespace WEService.Controllers
             }
 
             return Ok(user);
+        }
+        // POST: api/Users/check
+        [Route("check")]
+        [ResponseType(typeof(String))]
+        public String CheckUser(User u)
+        {
+            foreach (var row in db.Users)
+            {
+                if (row.email.Equals(u.email))
+                {
+                    return "Exists";
+                }
+            }
+            return "Available";
+
+        }
+
+        // GET: api/Users/login
+        [Route("login")]
+        [ResponseType(typeof(User))]
+        public User PostLogin(User u)
+        {
+            //
+            // TODO: Add Encryption for password check
+            //
+            User user = new User();
+            foreach (var row in db.Users)
+            {
+                if (row.email.Equals(u.email))
+                {
+                    if (row.password.Equals(u.password))
+                    {
+                        user.email = row.email;
+                        user.password = row.password;
+                        user.userId = row.userId;
+                        return user;
+                    }
+                }
+            }
+            
+            user.email = "";
+            user.password = "";
+            return user;
+
         }
 
         // PUT: api/Users/5
@@ -71,6 +118,10 @@ namespace WEService.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
+        
+
+        // Used for Register
         // POST: api/Users
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> PostUser(User user)
@@ -79,7 +130,21 @@ namespace WEService.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            // Check if email exists
+            foreach (var row in db.Users)
+            {
+                if(row.email.Equals(user.email))
+                {
+                    return BadRequest("Email already exists");
+                }
+            }
+            // Encryption for password
+            
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(user.password);
+            data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+            String hash = System.Text.Encoding.ASCII.GetString(data);
+            user.password = hash;
+            
             db.Users.Add(user);
             await db.SaveChangesAsync();
 

@@ -57,4 +57,7 @@ C:\Users\Shane\Documents\Visual Studio 2013\Projects\WEService\WEService\obj\Deb
 C:\Users\Shane\Documents\Visual Studio 2013\Projects\WEService\WEService\obj\Debug\WEService.pdb
 C:\Users\Shane\Documents\Visual Studio 2013\Projects\WEService\WEService\obj\Debug\WEService.Migrations.Initial.resources
 C:\Users\Shane\Documents\Visual Studio 2013\Projects\WEService\WEService\obj\Debug\WEService.csproj.GenerateResource.Cache
+C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\bin\System.Web.Cors.dll
+C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\bin\System.Web.Http.Cors.dll
+C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\bin\System.Web.Http.Cors.xml
 C:\Users\Shane\documents\visual studio 2013\Projects\WEService\WEService\obj\Debug\WEService.csprojResolveAssemblyReference.cache

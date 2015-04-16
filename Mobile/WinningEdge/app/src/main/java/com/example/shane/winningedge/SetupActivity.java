@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -31,79 +32,14 @@ public class SetupActivity extends ActionBarActivity {
         setContentView(R.layout.activity_setup);
 
 
-        final ToggleButton mToggleFootball = (ToggleButton) findViewById(R.id.toggleFootball);
-        final ToggleButton mToggleHurling = (ToggleButton) findViewById(R.id.toggleHurling);
-        final ToggleButton mToggleScore = (ToggleButton) findViewById(R.id.toggleScore);
-        final ToggleButton mToggleStat = (ToggleButton) findViewById(R.id.toggleStat);
+        final RadioButton mRadioFootball = (RadioButton) findViewById(R.id.radio_football);
+
+        final CheckBox mCheckboxStats = (CheckBox) findViewById(R.id.check_stats);
 
         final EditText mHomeTeam = (EditText) findViewById(R.id.homeTeam);
         final EditText mAwayTeam = (EditText) findViewById(R.id.awayTeam);
 
         Button mSetupConfirm = (Button) findViewById(R.id.setupConfirm);
-        Button mSetupCancel = (Button) findViewById(R.id.setupCancel);
-
-        // Invisible Components
-        final TextView mChoose = (TextView) findViewById(R.id.chooseTeam);
-        final CheckBox mCheckHome = (CheckBox) findViewById(R.id.checkHome);
-        final CheckBox mCheckAway = (CheckBox) findViewById(R.id.checkAway);
-
-        mToggleFootball.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(mToggleFootball.isChecked() == true)
-                {
-                    mToggleHurling.setChecked(false);
-                }
-                if(mToggleFootball.isChecked() == false)
-                {
-                    mToggleHurling.setChecked(true);
-                }
-            }
-        });
-        mToggleHurling.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(mToggleHurling.isChecked() == true)
-                {
-                    mToggleFootball.setChecked(false);
-                }
-                if(mToggleHurling.isChecked() == false)
-                {
-                    mToggleFootball.setChecked(true);
-                }
-            }
-        });
-        mToggleScore.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(mToggleScore.isChecked() == true)
-                {
-                    mToggleStat.setChecked(false);
-                    mChoose.setVisibility(View.GONE);
-                    mCheckHome.setVisibility(View.GONE);
-                    mCheckAway.setVisibility(View.GONE);
-                }
-            }
-        });
-        mToggleStat.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(mToggleStat.isChecked() == true)
-                {
-                    mToggleScore.setChecked(false);
-                    mChoose.setVisibility(View.VISIBLE);
-                    mCheckHome.setVisibility(View.VISIBLE);
-                    mCheckAway.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-
-
-
-
-
-        mSetupCancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code to go back
-            }
-        });
 
         mSetupConfirm.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -122,13 +58,13 @@ public class SetupActivity extends ActionBarActivity {
                     String h = mHomeTeam.getText().toString();
                     String a = mAwayTeam.getText().toString();
                     boolean b = false;
-                    if(mToggleFootball.isChecked())
+                    if(mRadioFootball.isChecked())
                     {
                         b = true;
                     }
 
                     Match m = new Match(d,h,a,b);
-                    if(mToggleScore.isChecked())
+                    if(!mCheckboxStats.isChecked())
                     {
                         // Finish this activity
                         finish();
@@ -145,6 +81,17 @@ public class SetupActivity extends ActionBarActivity {
 
     }
 
+    public void onCheckStatsClicked(View view)
+    {
+        if (((CheckBox) view).isChecked())
+        {
+            findViewById(R.id.select_stat_team).setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            findViewById(R.id.select_stat_team).setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -199,7 +146,7 @@ public class SetupActivity extends ActionBarActivity {
 
         //@Override
         protected void onPostExecute(String s) {
-            ((ToggleButton) a.findViewById(R.id.toggleFootball)).setText(s);
+            //((ToggleButton) a.findViewById(R.id.toggleFootball)).setText(s);
         }
     }
 
@@ -228,7 +175,7 @@ public class SetupActivity extends ActionBarActivity {
 
         //@Override
         protected void onPostExecute(String s) {
-            ((ToggleButton) a.findViewById(R.id.toggleHurling)).setText(s);
+            //((ToggleButton) a.findViewById(R.id.toggleHurling)).setText(s);
         }
     }
 }

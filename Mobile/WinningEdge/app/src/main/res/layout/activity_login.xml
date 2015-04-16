@@ -23,7 +23,6 @@
         android:fontFamily="sans-serif-medium"
         android:textStyle="italic"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="80dp"
         android:textSize="30sp"
         android:id="@+id/AppTitle"/>
 
@@ -40,6 +39,7 @@
 
             <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="@string/prompt_email"
+                android:layout_marginTop="80dp"
                 android:layout_marginBottom="10dp"
                 android:inputType="textEmailAddress" android:maxLines="1"
                 android:singleLine="true" />

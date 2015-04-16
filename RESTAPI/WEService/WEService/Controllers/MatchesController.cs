@@ -8,11 +8,14 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WEService.Models;
 
+
 namespace WEService.Controllers
 {
+    //[EnableCors(origins: "http://weservice.azurewebsites.net", headers: "*", methods: "*")]
     [RoutePrefix("api/Matches")]
     public class MatchesController : ApiController
     {
@@ -51,10 +54,10 @@ namespace WEService.Controllers
             return Ok(s);
         }
         
-        // GET: api/Matches/live
+        // GET: api/Matches/live/football
         [ResponseType(typeof(List<String>))]
-        [Route("live")]
-        public List<String> GetLive()       
+        [Route("live/football")]
+        public List<String> GetLiveFootball()       
         {
 
             
@@ -71,7 +74,7 @@ namespace WEService.Controllers
                 long l = m.matchDate;
                 DateTime date = start.AddMilliseconds(l);
                 DateTime today = DateTime.Today;
-                if (date.Date == today.Date)
+                if (date.Date == today.Date && m.football == true)
                 {
                     int g = 0;
                     int p = 0;
@@ -94,6 +97,55 @@ namespace WEService.Controllers
                 }
             }
             if(!list.Any())
+            {
+                list.Add("No matches played today");
+            }
+            return list;
+        }
+
+        // GET: api/Matches/live/hurling
+        [ResponseType(typeof(List<String>))]
+        [Route("live/hurling")]
+        public List<String> GetLiveHurling()
+        {
+
+
+            List<String> list = new List<string>();
+            List<Match> mList = new List<Match>();
+            foreach (var row in db.Matches)
+            {
+                mList.Add(row);
+            }
+
+            foreach (Match m in mList)
+            {
+                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                long l = m.matchDate;
+                DateTime date = start.AddMilliseconds(l);
+                DateTime today = DateTime.Today;
+                if (date.Date == today.Date && m.football == false)
+                {
+                    int g = 0;
+                    int p = 0;
+                    foreach (var s in db.Scores)
+                    {
+                        if (s.matchId == m.matchId)
+                        {
+                            if (s.goal == true)
+                            {
+                                g++;
+                            }
+                            else
+                            {
+                                p++;
+                            }
+                        }
+                    }
+
+                    list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                }
+            }
+            if (!list.Any())
             {
                 list.Add("No matches played today");
             }

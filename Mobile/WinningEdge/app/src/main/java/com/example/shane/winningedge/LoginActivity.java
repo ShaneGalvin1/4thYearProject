@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -25,6 +26,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +43,20 @@ import java.util.List;
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
-
-    private UserLoginTask mAuthTask = null;
+    private User user = new User();
+    private boolean reg = false;
+    private boolean available;
+    private UserLogin mAuthTask = null;
+    private UserRegister mAuthTaskReg = null;
+    private UserCheck mAuthTaskCheck = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+    private EditText mPasswordView, mPasswordConfirm;
+    private Button mEmailSignInButton;
     private View mProgressView;
     private View mLoginFormView;
+    private TextView mPageText, mPageLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +79,49 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mPasswordConfirm = (EditText) findViewById(R.id.passwordConfirm);
+
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                if(reg == false) {
+                    attemptLogin();
+                }
+                else if(reg == true)
+                {
+                    attemptRegister();
+                }
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        mPageText = (TextView) findViewById(R.id.newReg);
+
+        mPageLink = (TextView) findViewById(R.id.linkReg);
+        mPageLink.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(mPageLink.getText().equals(getString(R.string.link_reg)))
+                {
+                    mPasswordConfirm.setVisibility(View.VISIBLE);
+                    mPageText.setText(getString(R.string.log));
+                    mPageLink.setText(getString(R.string.log_here));
+                    mEmailSignInButton.setText(R.string.action_reg);
+                    reg = true;
+                }
+                else
+                {
+                    mPasswordConfirm.setVisibility(View.GONE);
+                    mPageText.setText(getString(R.string.new_reg));
+                    mPageLink.setText(getString(R.string.link_reg));
+                    mEmailSignInButton.setText(R.string.action_sign_in);
+                    reg = false;
+                }
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -96,6 +143,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
+
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
@@ -105,7 +153,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -129,11 +177,80 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+                showProgress(true);
+                mAuthTask = new UserLogin(email, password);
+                mAuthTask.execute((Void) null);
+
         }
     }
+
+    //
+    // Attempt Register
+    //
+    public void attemptRegister() {
+        if (mAuthTaskReg != null) {
+            return;
+        }
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+        mPasswordConfirm.setError(null);
+
+        // Store values at the time of the login attempt.
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+        String passwordConfirm = mPasswordConfirm.getText().toString();
+
+
+
+        boolean cancel = false;
+        View focusView = null;
+
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        if(TextUtils.isEmpty(passwordConfirm))
+        {
+            mPasswordConfirm.setError(getString(R.string.error_field_required));
+            focusView = mPasswordConfirm;
+            cancel = true;
+        } else if(!password.equals(passwordConfirm)) {
+            mPasswordConfirm.setError(getString(R.string.error_password_confirm));
+            focusView = mPasswordConfirm;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user register attempt.
+            mAuthTaskCheck = new UserCheck(email, password);
+            mAuthTaskCheck.execute();
+        }
+    }
+
+
+
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -239,56 +356,191 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
+    private class UserLogin extends AsyncTask<Void, Void, User> {
+        private User u = new User();
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+        public UserLogin(String email, String password) {
+            u.setEmail(email);
+            u.setPassword(password);
         }
-
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
+        protected User doInBackground(Void... params) {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            //Login
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                return restTemplate.postForObject("http://weservice.azurewebsites.net/api/Users/login", u, User.class);
+            } catch(HttpClientErrorException e) {
+                u.setEmail("HTTP");
+                u.setPassword("");
+                return u;
+            } catch(RestClientException e) {
+                u.setEmail("REST");
+                u.setPassword("");
+                return u;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
         }
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+        //@Override
+        protected void onPostExecute(User u) {
+            // LOGIN
+            if(u.getEmail().equals("REST"))
+            {
+                Toast.makeText(getApplicationContext(), "An Error Occurred, Please Try Again",
+                        Toast.LENGTH_LONG).show();
+            }
+            if(u.getEmail().equals("HTTP"))
+            {
+                Toast.makeText(getApplicationContext(), "An Error Occurred, Please Try Again",
+                        Toast.LENGTH_LONG).show();
+            }
 
-            if (success) {
+            if(u.getEmail() == null || u.getPassword() == null)
+            {
+
+                mAuthTask = null;
+                showProgress(false);
+                Toast.makeText(getApplicationContext(), "An Error Occurred, Please Try Again",
+                        Toast.LENGTH_LONG).show();
+            }
+            else if(u.getEmail().isEmpty() ||  u.getPassword().isEmpty())
+            {
+                // REST or HTTP Error Occurred
+                mAuthTask = null;
+                showProgress(false);
+                Toast.makeText(getApplicationContext(), "An Error Occurred, Please Try Again",
+                        Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                // Finish this activity
                 finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
 
+                // Start the main activity
+                Intent i = new Intent(getApplicationContext(), SetupActivity.class);
+                startActivity(i);
+            }
+
+        }
         @Override
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+
+    }
+
+    // Register
+    private class UserRegister extends AsyncTask<Void, Void, User> {
+        private User u = new User();
+
+        public UserRegister(User user)
+        {
+            u = user;
+        }
+        @Override
+        protected User doInBackground(Void... params) {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            //Register
+            try {
+                return restTemplate.postForObject("http://weservice.azurewebsites.net/api/Users", u, User.class);
+            } catch(HttpClientErrorException e) {
+                u.setEmail("");
+                u.setPassword("");
+                return u;
+            } catch(RestClientException e) {
+                u.setEmail("");
+                u.setPassword("");
+                return u;
+            }
+
+        }
+
+        //@Override
+        protected void onPostExecute(User u) {
+            // REGISTER
+            if(u.getEmail() == null || u.getPassword() == null || u.getEmail().isEmpty() ||  u.getPassword().isEmpty())
+            {
+                // REST or HTTP Error Occurred
+                mAuthTask = null;
+                showProgress(false);
+                Toast.makeText(getApplicationContext(), "An error occurred, please try again",
+                        Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                // Finish this activity
+                finish();
+
+                // Start the main activity
+                Intent i = new Intent(getApplicationContext(), SetupActivity.class);
+                startActivity(i);
+            }
+
+        }
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
+    }
+    // Register
+    private class UserCheck extends AsyncTask<Void, Void, String> {
+        User u = new User();
+        public UserCheck(String email, String password) {
+            u.setEmail(email);
+            u.setPassword(password);
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            // Check
+            try {
+                return restTemplate.postForObject("http://weservice.azurewebsites.net/api/Users/check", u, String.class);
+            } catch (HttpClientErrorException e) {
+                return "HTTP Error";
+            } catch (RestClientException e) {
+                return "REST Error";
+            }
+
+        }
+
+        //@Override
+        protected void onPostExecute(String s) {
+            if(s.equals("Exists")) {
+                // Email exists
+                View focusView = mEmailView;
+                mAuthTaskReg = null;
+                showProgress(false);
+                mEmailView.setError(getString(R.string.error_email_exists));
+                focusView.requestFocus();
+            } else if(s.equals("Available")) {
+                // Email is Available
+                showProgress(true);
+                user.setEmail(u.getEmail());
+                user.setPassword(u.getPassword());
+                mAuthTaskReg = new UserRegister(user);
+                mAuthTaskReg.execute((Void) null);
+                available = true;
+            } else if(s.equals("HTTP Error")) {
+                // HTTP Error
+                mAuthTaskReg = null;
+                showProgress(false);
+                Toast.makeText(getApplicationContext(), "HTTP Error, please try again",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                // REST Error
+                mAuthTaskReg = null;
+                showProgress(false);
+                Toast.makeText(getApplicationContext(), "REST Error, please try again",
+                        Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 }
