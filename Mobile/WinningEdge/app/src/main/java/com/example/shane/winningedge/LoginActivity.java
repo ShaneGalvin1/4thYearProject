@@ -43,9 +43,9 @@ import java.util.List;
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
-    private User user = new User();
-    private boolean reg = false;
-    private boolean available;
+    private Session mSession;
+
+    private boolean mReg = false;
     private UserLogin mAuthTask = null;
     private UserRegister mAuthTaskReg = null;
     private UserCheck mAuthTaskCheck = null;
@@ -62,6 +62,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ((AppUser) getApplication()).removeUser();
+        mSession = Session.getCurrentSession(this);
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -86,10 +89,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(reg == false) {
+                if(mReg == false) {
                     attemptLogin();
                 }
-                else if(reg == true)
+                else if(mReg == true)
                 {
                     attemptRegister();
                 }
@@ -110,7 +113,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     mPageText.setText(getString(R.string.log));
                     mPageLink.setText(getString(R.string.log_here));
                     mEmailSignInButton.setText(R.string.action_reg);
-                    reg = true;
+                    mReg = true;
                 }
                 else
                 {
@@ -118,7 +121,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     mPageText.setText(getString(R.string.new_reg));
                     mPageLink.setText(getString(R.string.link_reg));
                     mEmailSignInButton.setText(R.string.action_sign_in);
-                    reg = false;
+                    mReg = false;
                 }
             }
         });
@@ -385,36 +388,45 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         //@Override
         protected void onPostExecute(User u) {
+            View focusView = null;
             // LOGIN
             if(u.getEmail().equals("REST"))
             {
-                Toast.makeText(getApplicationContext(), "An Error Occurred, Please Try Again",
-                        Toast.LENGTH_LONG).show();
+                mEmailView.setError(getString(R.string.error_server_side));
+                focusView.requestFocus();
+                mAuthTask = null;
+                showProgress(false);
             }
             if(u.getEmail().equals("HTTP"))
             {
-                Toast.makeText(getApplicationContext(), "An Error Occurred, Please Try Again",
-                        Toast.LENGTH_LONG).show();
-            }
-
-            if(u.getEmail() == null || u.getPassword() == null)
-            {
-
+                mEmailView.setError(getString(R.string.error_server_side));
+                focusView.requestFocus();
                 mAuthTask = null;
                 showProgress(false);
-                Toast.makeText(getApplicationContext(), "An Error Occurred, Please Try Again",
-                        Toast.LENGTH_LONG).show();
             }
-            else if(u.getEmail().isEmpty() ||  u.getPassword().isEmpty())
+
+            if(u.getEmail() == null || u.getEmail().isEmpty())
             {
-                // REST or HTTP Error Occurred
+                mEmailView.setError(getString(R.string.error_email));
+                focusView.requestFocus();
                 mAuthTask = null;
                 showProgress(false);
-                Toast.makeText(getApplicationContext(), "An Error Occurred, Please Try Again",
-                        Toast.LENGTH_LONG).show();
+            }
+            else if(u.getEmail().equals("ok"))
+            {
+                mPasswordView.setError(getString(R.string.error_password));
+                focusView.requestFocus();
+                mAuthTask = null;
+                showProgress(false);
+
             }
             else
             {
+                ((AppUser) getApplication()).setUser(u);
+
+                mSession.putUserEmail(u.getEmail());
+                mSession.putUserId(u.getUserId());
+
                 // Finish this activity
                 finish();
 
@@ -461,17 +473,23 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         //@Override
         protected void onPostExecute(User u) {
+            View focusView = null;
             // REGISTER
             if(u.getEmail() == null || u.getPassword() == null || u.getEmail().isEmpty() ||  u.getPassword().isEmpty())
             {
                 // REST or HTTP Error Occurred
                 mAuthTask = null;
                 showProgress(false);
-                Toast.makeText(getApplicationContext(), "An error occurred, please try again",
-                        Toast.LENGTH_LONG).show();
+                mEmailView.setError(getString(R.string.error_server_side));
+                focusView.requestFocus();
             }
             else
             {
+                ((AppUser) getApplication()).setUser(u);
+
+                mSession.putUserEmail(u.getEmail());
+                mSession.putUserId(u.getUserId());
+
                 // Finish this activity
                 finish();
 
@@ -521,12 +539,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 focusView.requestFocus();
             } else if(s.equals("Available")) {
                 // Email is Available
+                User u = new User();
                 showProgress(true);
-                user.setEmail(u.getEmail());
-                user.setPassword(u.getPassword());
-                mAuthTaskReg = new UserRegister(user);
+                u.setEmail(u.getEmail());
+                u.setPassword(u.getPassword());
+                mAuthTaskReg = new UserRegister(u);
                 mAuthTaskReg.execute((Void) null);
-                available = true;
             } else if(s.equals("HTTP Error")) {
                 // HTTP Error
                 mAuthTaskReg = null;

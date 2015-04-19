@@ -27,25 +27,32 @@ import java.util.ListIterator;
 
 public class MainActivity extends ActionBarActivity {
 
-    Match m;
-    int id, sId;
-    Score score;
+    private User mUser;
+    private Session mSession;
+
+    private Match m;
+    private int id, sId;
+    private Score score;
+
+    // UI Components
+    private TextView hGoals, hPoints, aGoals, aPoints;
+    private Button homeGoal, homePoint, awayGoal, awayPoint, matchEvent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         new getNextId(this).execute();
-        final TextView hGoals = (TextView) findViewById(R.id.hGoals);
-        final TextView hPoints = (TextView) findViewById(R.id.hPoints);
-        final TextView aGoals = (TextView) findViewById(R.id.aGoals);
-        final TextView aPoints = (TextView) findViewById(R.id.aPoints);
+        hGoals = (TextView) findViewById(R.id.hGoals);
+        hPoints = (TextView) findViewById(R.id.hPoints);
+        aGoals = (TextView) findViewById(R.id.aGoals);
+        aPoints = (TextView) findViewById(R.id.aPoints);
 
         Intent i = getIntent();
         m = (Match) i.getSerializableExtra("Match");
         //new CreateMatch(this).execute();
 
         // Button Click Events
-        final Button homeGoal = (Button) findViewById(R.id.homeGoal);
+        homeGoal = (Button) findViewById(R.id.homeGoal);
         homeGoal.setEnabled(false);
         homeGoal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -58,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
                 new PostScore(getParent()).execute();
             }
         });
-        final Button homePoint = (Button) findViewById(R.id.homePoint);
+        homePoint = (Button) findViewById(R.id.homePoint);
         homePoint.setEnabled(false);
         homePoint.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -71,7 +78,7 @@ public class MainActivity extends ActionBarActivity {
                 new PostScore(getParent()).execute();
             }
         });
-        final Button awayGoal = (Button) findViewById(R.id.awayGoal);
+        awayGoal = (Button) findViewById(R.id.awayGoal);
         awayGoal.setEnabled(false);
         awayGoal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -83,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
                 new Update(getParent()).execute();
             }
         });
-        final Button awayPoint = (Button) findViewById(R.id.awayPoint);
+        awayPoint = (Button) findViewById(R.id.awayPoint);
         awayPoint.setEnabled(false);
         awayPoint.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -96,7 +103,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        final Button matchEvent = (Button) findViewById(R.id.matchEvent);
+        matchEvent = (Button) findViewById(R.id.matchEvent);
         matchEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(matchEvent.getText().equals("Start Match"))
@@ -104,20 +111,14 @@ public class MainActivity extends ActionBarActivity {
                     Calendar currentDate = Calendar.getInstance();
                     long d = currentDate.getTimeInMillis();
                     m.setMatchDate(d);
-                    homeGoal.setEnabled(true);
-                    homePoint.setEnabled(true);
-                    awayGoal.setEnabled(true);
-                    awayPoint.setEnabled(true);
+                    toggleButtons();
                     m.setInPlay(true);
                     new CreateMatch(getParent()).execute();
                     matchEvent.setText("Half Time");
                 }
                 else if(matchEvent.getText().equals("Half Time"))
                 {
-                    homeGoal.setEnabled(false);
-                    homePoint.setEnabled(false);
-                    awayGoal.setEnabled(false);
-                    awayPoint.setEnabled(false);
+                    toggleButtons();
                     m.setInPlay(false);
                     m.setHalfTime(true);
                     new Update(getParent()).execute();
@@ -125,10 +126,7 @@ public class MainActivity extends ActionBarActivity {
                 }
                 else if(matchEvent.getText().equals("Start Second Half"))
                 {
-                    homeGoal.setEnabled(true);
-                    homePoint.setEnabled(true);
-                    awayGoal.setEnabled(true);
-                    awayPoint.setEnabled(true);
+                    toggleButtons();
                     m.setInPlay(true);
                     m.setHalfTime(false);
                     new Update(getParent()).execute();
@@ -136,10 +134,7 @@ public class MainActivity extends ActionBarActivity {
                 }
                 else if(matchEvent.getText().equals("Full Time"))
                 {
-                    homeGoal.setEnabled(false);
-                    homePoint.setEnabled(false);
-                    awayGoal.setEnabled(false);
-                    awayPoint.setEnabled(false);
+                    toggleButtons();
                     m.setInPlay(false);
                     m.setFullTime(true);
                     new Update(getParent()).execute();
@@ -182,6 +177,21 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void toggleButtons()
+    {
+        if(homeGoal.isEnabled()) {
+            homeGoal.setEnabled(false);
+            homePoint.setEnabled(false);
+            awayGoal.setEnabled(false);
+            awayPoint.setEnabled(false);
+        } else {
+            homeGoal.setEnabled(true);
+            homePoint.setEnabled(true);
+            awayGoal.setEnabled(true);
+            awayPoint.setEnabled(true);
+        }
+    }
+
     private class CreateMatch extends AsyncTask<Void, Void, String> {
         private Activity a;
 
@@ -195,18 +205,25 @@ public class MainActivity extends ActionBarActivity {
 
             try {
                 m = restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches", m, Match.class);
-                return "";
+                return "Success";
             } catch(HttpClientErrorException e) {
-                return "HTTP Error";
+                return "HTTP";
             } catch(RestClientException e) {
-                return "REST Error";
+                return "REST";
             }
 
         }
 
         //@Override
         protected void onPostExecute(String s) {
-            id = m.getMatchId();
+            if(s.equals("Success")) {
+                id = m.getMatchId();
+            } else if(s.equals("HTTP")) {
+                // Error Handling
+            } else {
+                // Error Handling
+            }
+
         }
     }
 
@@ -225,18 +242,24 @@ public class MainActivity extends ActionBarActivity {
             try {
                 restTemplate.put("http://weservice.azurewebsites.net/api/Matches/" + m.getMatchId(),m, Match.class);
 
-                return "";
+                return "Success";
             } catch(HttpClientErrorException e) {
-                return "HTTP Error";
+                return "HTTP";
             } catch(RestClientException e) {
-                return "REST Error";
+                return "REST";
             }
 
         }
 
         //@Override
         protected void onPostExecute(String s) {
-           // ((TextView) a.findViewById(R.id.text)).setText(s);
+             if(s.equals("Success")) {
+                 // Update Successful
+             } else if(s.equals("HTTP")) {
+                 // Error Handling
+             } else {
+                 // Error Handling
+             }
         }
     }
 
@@ -252,19 +275,24 @@ public class MainActivity extends ActionBarActivity {
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             try {
                 restTemplate.postForObject("http://weservice.azurewebsites.net/api/Scores", score, Score.class);
-                //return restTemplate.getForObject("http://weservice.azurewebsites.net/api/Matches/Name/1", String.class);
                 return "Success";
             } catch(HttpClientErrorException e) {
-                return "HTTP Error";
+                return "HTTP";
             } catch(RestClientException e) {
-                return "REST Error";
+                return "REST";
             }
 
         }
 
         //@Override
         protected void onPostExecute(String s) {
-             //((TextView) a.findViewById(R.id.text)).setText(s);
+            if(s.equals("Success")) {
+                // Update Successful
+            } else if(s.equals("HTTP")) {
+                // Error Handling
+            } else {
+                // Error Handling
+            }
         }
     }
 
@@ -282,16 +310,22 @@ public class MainActivity extends ActionBarActivity {
             try {
                 return restTemplate.getForObject("http://weservice.azurewebsites.net/api/Scores/id", String.class);
             } catch(HttpClientErrorException e) {
-                return "HTTP Error";
+                return "HTTP";
             } catch(RestClientException e) {
-                return "REST Error";
+                return "REST";
             }
 
         }
 
         //@Override
         protected void onPostExecute(String s) {
-            sId = Integer.parseInt(s);
+            if(s.equals("REST")) {
+                // Error Handling
+            } else if(s.equals("HTTP")) {
+                // Error Handling
+            } else {
+                sId = Integer.parseInt(s);
+            }
         }
     }
 

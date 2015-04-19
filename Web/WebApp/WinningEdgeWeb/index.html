@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<publishData><publishProfile profileName="winningedge - Web Deploy" publishMethod="MSDeploy" publishUrl="winningedge.scm.azurewebsites.net:443" msdeploySite="winningedge" userName="$winningedge" userPWD="2PtbwHQjHnnJCJW71lePn4mWJx1zqqCHNAZh3d6uy3G3rgi4PvYXFsJovT6n" destinationAppUrl="http://winningedge.azurewebsites.net" SQLServerDBConnectionString="" mySQLDBConnectionString="" hostingProviderForumLink="" controlPanelLink="http://windows.azure.com" webSystem="WebSites"><databases/></publishProfile><publishProfile profileName="winningedge - FTP" publishMethod="FTP" publishUrl="ftp://waws-prod-db3-023.ftp.azurewebsites.windows.net/site/wwwroot" ftpPassiveMode="True" userName="winningedge\$winningedge" userPWD="2PtbwHQjHnnJCJW71lePn4mWJx1zqqCHNAZh3d6uy3G3rgi4PvYXFsJovT6n" destinationAppUrl="http://winningedge.azurewebsites.net" SQLServerDBConnectionString="" mySQLDBConnectionString="" hostingProviderForumLink="" controlPanelLink="http://windows.azure.com" webSystem="WebSites"><databases/></publishProfile></publishData>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Winning Edge</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/heroic-features.css" rel="stylesheet">
+	
+	<!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/football", function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#foot').html(ul);
+			});
+		});
+	</script>
+	
+	<script>
+	$(document).ready(function(){			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/hurling", function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#hurl').html(ul);
+			});
+		});
+	</script>
+	
+ 
+	<script>
+	setInterval(function() {
+		$(document).ready(function(){			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/football", function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#foot').html(ul);
+			});
+		});
+	}, 3000);
+	</script>
+	<script>
+	setInterval(function() {
+		$(document).ready(function(){			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/hurling", function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#hurl').html(ul);
+			});
+		});
+	}, 3000);
+	
+	</script>
+	
+	
+	
+	<script>
+	$(document).ready(function(){			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/results/football", function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#footR').html(ul);
+			});
+		});
+	</script>
+	
+	<script>
+	$(document).ready(function(){			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/results/hurling", function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#hurlR').html(ul);
+			});
+		});
+	</script>
+	
+ 
+	<script>
+	setInterval(function() {
+		$(document).ready(function(){			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/results/football", function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#footR').html(ul);
+			});
+		});
+	}, 3000);
+	</script>
+	<script>
+	setInterval(function() {
+		$(document).ready(function(){			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/results/hurling", function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#hurlR').html(ul);
+			});
+		});
+	}, 3000);
+	
+	</script>
+	
+	
+	
+	
+	<style>
+	#live ul {
+		list-style-image: url('green.gif');
+	}
+	
+	#results ul {
+		list-style-image: url('red.gif');
+	}
+	</style>
+	
+</head>
+
+<body>
+	
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+			
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+						   
+			    <a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-home"></span>     Home</a>
+			    <a class="navbar-brand page-scroll" href="#gallery" ><span class="glyphicon glyphicon-picture"></span>     Gallery</a>
+			    <a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-envelope"></span>     Contact</a>
+				
+            </div>
+			<div class="nav pull-right">
+				<a class="navbar-brand page-scroll" data-toggle="collapse" data-target="#collapseOne" 
+						   href="#collapseOne" ><span class="glyphicon glyphicon-log-in"></span>     Login</a>
+				</div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container" id="home">
+	
+		<img src="we_icon.png" alt="trophy icon" style="width:120px;height:120px" align="middle">	
+		<img src="winedgetext.png" alt="winning edge title" align="middle">	
+			
+		<hr>
+		<div class="row">
+            <div class="col-lg-12">
+                <h3>G.A.A. Scores</h3>
+            </div>
+        </div>
+		<!-- Jumbotron Header -->
+        <header class="jumbotron hero-spacer">
+			<div id="live">		
+			<h2>Live Matches</h2>
+
+			<h3>Football</h3>
+			<p id="foot"> </p>
+			
+			<h3>Hurling</h3>
+			<p id="hurl"> </p>
+			</div>
+		</header>
+		<div class="jumbotron hero-spacer">
+		
+			<div id="results">
+			<h2>Results</h2>
+
+			<h3>Football</h3>
+			<p id="footR"> </p>
+			
+			<h3>Hurling</h3>
+			<p id="hurlR"> </p>
+			</div>
+        </div>		
+        <hr>
+
+        <!-- Title -->
+        <div class="row" id="gallery">
+            <div class="col-lg-12">
+                <h3>Gallery</h3>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Page Features -->
+        <div class="row text-center">
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt="">
+                    <div class="caption">
+                        <h3>Feature Label</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt="">
+                    <div class="caption">
+                        <h3>Feature Label</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt="">
+                    <div class="caption">
+                        <h3>Feature Label</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt="">
+                    <div class="caption">
+                        <h3>Feature Label</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <hr>
+		
+		
+		<!-- Login Collapse -->
+		
+		<div class="row">
+            <div class="col-lg-12">
+                <h3>Registered Members</h3>
+            </div>
+        </div>
+		
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default" id="panel1">
+				<div class="panel-heading">
+					 <h3 class="panel-title">
+						<a data-toggle="collapse" data-target="#collapseOne" 
+						   href="#collapseOne" class="collapsed">
+						   <img src="we_icon.png" alt="trophy icon" style="width:30px;height:30px">
+						  Login
+						</a>
+						
+					</h3>
+				</div>
+				
+				<div id="collapseOne" class="panel-collapse collapse">
+					<div class="panel-body">
+						<h1 class="text-center">Login to Winning Edge</h1>   
+							<form class="form col-md-12 center-block">
+								<div class="form-group">
+									<input type="text" class="form-control input-lg" placeholder="Email" id="email" required>
+								</div>
+								
+								<div class="alert alert-danger alert-dismissible hide-me" role="alert" id="email-error">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+								  <strong>Error:</strong> Incorrect Email
+								</div>
+					
+								<div class="form-group">
+									<input type="password" class="form-control input-lg" placeholder="Password" id="password" required>
+								</div>
+								
+								<div class="alert alert-danger alert-dismissible hide-me" role="alert" id="password-error">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+								  <strong>Error:</strong> Incorrect Password
+								</div>
+								
+								<div class="form-group">
+									<button class="btn btn-primary btn-lg btn-block" id="login">Sign In</button>             
+								</div>
+							</form>
+					</div>
+					
+					<h4 class="text-center"><a href="https://play.google.com/store/apps" class="btn-social btn-outline" id="android"><i class="fa fa-fw fa-android"></i></a><b></br></br>Download the Winning Edge Android Application to Register</b></h4>
+				</div>
+			</div>			
+		</div>
+
+	
+<!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="text-center">Copyright &copy; Winning Edge 2015</p>
+                </div>
+            </div>
+        </footer>	
+	</div>
+	
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+	
+	<script>
+	$(document).ready(function() {
+		$("#login").click(function(){
+			$('#password-error').hide();
+			$('#email-error').hide();
+			// do something when clicked
+			$.post("http://weservice.azurewebsites.net/api/Users/login", { userId: 0, email: $('#email').val(), password: $('#password').val() }, function(data, status){
+				if(data.email == "ok")
+				{
+					// Password wrong
+					$('#password-error').fadeIn();
+				}
+				else if(data.email == "")
+				{
+					// wrong email
+					$('#email-error').fadeIn();
+					
+				}
+				else if(data.userId > 0)
+				{
+					window.location = "main.html"
+					
+				}
+			});
+		});	
+	});
+	</script>
+
+</body>
+
+</html>

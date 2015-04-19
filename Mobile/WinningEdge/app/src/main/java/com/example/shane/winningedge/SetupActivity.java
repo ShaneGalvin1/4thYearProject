@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,44 +27,69 @@ import java.util.Date;
 
 public class SetupActivity extends ActionBarActivity {
 
+    private User mUser;
+    private Session mSession;
+
+    private RadioButton mRadioFootball;
+    private CheckBox mCheckboxStats;
+    private EditText mHomeTeam, mAwayTeam;
+    private Button mSetupConfirm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
+        mUser = ((AppUser) getApplication()).getUser();
+        mSession = Session.getCurrentSession(this);
 
-        final RadioButton mRadioFootball = (RadioButton) findViewById(R.id.radio_football);
+        mRadioFootball = (RadioButton) findViewById(R.id.radio_football);
 
-        final CheckBox mCheckboxStats = (CheckBox) findViewById(R.id.check_stats);
+        mCheckboxStats = (CheckBox) findViewById(R.id.check_stats);
 
-        final EditText mHomeTeam = (EditText) findViewById(R.id.homeTeam);
-        final EditText mAwayTeam = (EditText) findViewById(R.id.awayTeam);
+        mHomeTeam = (EditText) findViewById(R.id.homeTeam);
+        mAwayTeam = (EditText) findViewById(R.id.awayTeam);
 
-        Button mSetupConfirm = (Button) findViewById(R.id.setupConfirm);
+        mSetupConfirm = (Button) findViewById(R.id.setupConfirm);
 
         mSetupConfirm.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(mHomeTeam.getText().equals("") || mHomeTeam.getText().equals("Home Team"))
-                {
+                View focusView = null;
+                boolean cancel = false;
 
+                mHomeTeam.setError(null);
+                mAwayTeam.setError(null);
+
+                String h = mHomeTeam.getText().toString();
+                String a = mAwayTeam.getText().toString();
+
+                if(TextUtils.isEmpty(h) || h == null)
+                {
+                    mHomeTeam.setError(getString(R.string.error_field_required));
+                    focusView = mHomeTeam;
+                    cancel = true;
                 }
-                else if(mAwayTeam.getText().equals("") || mAwayTeam.getText().equals("Away Team"))
+                else if(TextUtils.isEmpty(a) || a == null)
                 {
+                    mAwayTeam.setError(getString(R.string.error_field_required));
+                    focusView = mAwayTeam;
+                    cancel = true;
+                }
 
+                if(cancel) {
+                    focusView.requestFocus();
                 }
                 else
                 {
-                    Calendar currentDate = Calendar.getInstance();
-                    long d = currentDate.getTimeInMillis();
-                    String h = mHomeTeam.getText().toString();
-                    String a = mAwayTeam.getText().toString();
+
                     boolean b = false;
                     if(mRadioFootball.isChecked())
                     {
                         b = true;
                     }
 
-                    Match m = new Match(d,h,a,b);
+                    Match m = new Match(h,a,b);
+                    m.setUserId(mUser.getUserId());
                     if(!mCheckboxStats.isChecked())
                     {
                         // Finish this activity
@@ -72,6 +98,17 @@ public class SetupActivity extends ActionBarActivity {
                         // Start the main activity
 
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        i.putExtra("Match", m);
+                        startActivity(i);
+                    }
+                    else
+                    {
+                        // Finish this activity
+                        finish();
+
+                        // Start the main activity
+
+                        Intent i = new Intent(getApplicationContext(), StatActivity.class);
                         i.putExtra("Match", m);
                         startActivity(i);
                     }
@@ -115,67 +152,4 @@ public class SetupActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class Update extends AsyncTask<Void, Void, String> {
-        private Activity a;
-
-        public Update(Activity a) {
-            this.a = a;
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            Calendar currentDate = Calendar.getInstance();
-            long d = currentDate.getTimeInMillis();
-
-            String h = "Team 1";
-            String a = "Team 2";
-            boolean b = true;
-
-            Match m = new Match(d,h,a,b);
-            try {
-                restTemplate.postForObject("http://weservice.azurewebsites.net/api/Matches", m, Match.class);
-                return "Success";
-            } catch(HttpClientErrorException e) {
-                return "HTTP Error";
-            } catch(RestClientException e) {
-                return "REST Error";
-            }
-
-        }
-
-        //@Override
-        protected void onPostExecute(String s) {
-            //((ToggleButton) a.findViewById(R.id.toggleFootball)).setText(s);
-        }
-    }
-
-    private class PostScore extends AsyncTask<Void, Void, String> {
-        private Activity a;
-
-        public PostScore(Activity a) {
-            this.a = a;
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            Score score = new Score();
-            try {
-                restTemplate.postForObject("http://weservice.azurewebsites.net/api/Scores", score, Score.class);
-                //return restTemplate.getForObject("http://weservice.azurewebsites.net/api/Matches/Name/1", String.class);
-                return "Success";
-            } catch(HttpClientErrorException e) {
-                return "HTTP Error";
-            } catch(RestClientException e) {
-                return "REST Error";
-            }
-
-        }
-
-        //@Override
-        protected void onPostExecute(String s) {
-            //((ToggleButton) a.findViewById(R.id.toggleHurling)).setText(s);
-        }
-    }
 }

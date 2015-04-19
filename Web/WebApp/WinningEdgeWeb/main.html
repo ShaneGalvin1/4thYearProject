@@ -28,6 +28,7 @@
 	<script>
 	$(document).ready(function(){			
 			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/football", function(data, status){
+				
 				var ul = $('<ul>');
 				var info = data[0];
 				jQuery.each(data, function(i, val) {
@@ -93,6 +94,14 @@
 	}, 3000);
 	
 	</script>
+	<script>
+	function login() {
+		var data = "{ userId: 0, email: " + email + ", password: " + password +" }";
+		$.post("http://weservice.azurewebsites.net/api/Users/login", { userId: 0, email: "email@gmail.com", password: "password" }, function(data, status){
+			window.location.href = "main.html"
+		});
+	}
+	</script>
 
 
 </head>
@@ -110,7 +119,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="#">Login</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -133,7 +142,6 @@
 
     <!-- Page Content -->
     <div class="container">
-
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
             <h1>Winning Edge</h1>
@@ -145,6 +153,9 @@
 			<h3>Hurling</h3>
 			<p id="hurl"> </p>
 			
+			<h3>Test</h3>
+			<p id="test"> </p>
+			
         </header>
 		
         <hr>
@@ -152,7 +163,7 @@
         <!-- Title -->
         <div class="row">
             <div class="col-lg-12">
-                <h3>Latest Features</h3>
+                <h3>Gallery</h3>
             </div>
         </div>
         <!-- /.row -->
@@ -221,13 +232,13 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2015</p>
+                    <p>Copyright &copy; Winning Edge 2015</p>
                 </div>
             </div>
         </footer>
 
     </div>
-    <!-- /.container -->
+	
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

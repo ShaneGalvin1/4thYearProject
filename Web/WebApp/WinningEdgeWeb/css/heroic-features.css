@@ -1,0 +1,89 @@
+/*!
+ * Start Bootstrap - Heroic Features HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+
+.navbar-header a {
+	padding-right: 30px;
+}
+
+.nav-right {
+	float: right;
+}
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+.hide-me{
+    display: none;
+}
+
+.hero-spacer {
+	
+}
+
+.hero-feature {
+    margin-bottom: 30px;
+	
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.panel-heading a:after {
+    font-family:'Glyphicons Halflings';
+    content:"\e114";
+    float: right;
+    color: grey;
+}
+.panel-heading a.collapsed:after {
+    content:"\e080";
+}
+
+.panel-title {
+	font-size: 25px;
+}
+
+#android {
+	text-align: center;
+}
+
+.btn-outline {
+    margin-top: 15px;
+    border: solid 2px #000000;
+    font-size: 20px;
+	text-align: center;
+    color: #088da5;
+    background: 0 0;
+    transition: all .3s ease-in-out;
+}
+
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active,
+.btn-outline.active {
+    border: solid 2px #088da5;
+    color: #fff;
+    background: #000000;
+}
+
+.btn-social {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #092129;
+    border-radius: 100%;
+    text-align: center;
+    font-size: 20px;
+    line-height: 45px;
+}
+
+.btn:focus,
+.btn:active,
+.btn.active {
+    outline: 0;
+}

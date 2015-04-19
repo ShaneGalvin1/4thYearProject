@@ -60,9 +60,17 @@ namespace WEService.Controllers
         public User PostLogin(User u)
         {
             //
-            // TODO: Add Encryption for password check
+            // Encryption for password check
             //
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(u.password);
+            data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+            String hash = System.Text.Encoding.ASCII.GetString(data);
+            u.password = hash;
+            
             User user = new User();
+            user.userId = 0;
+            user.email = "";
+            user.password = "";
             foreach (var row in db.Users)
             {
                 if (row.email.Equals(u.email))
@@ -74,13 +82,10 @@ namespace WEService.Controllers
                         user.userId = row.userId;
                         return user;
                     }
+                    user.email = "ok";
                 }
-            }
-            
-            user.email = "";
-            user.password = "";
+            }            
             return user;
-
         }
 
         // PUT: api/Users/5

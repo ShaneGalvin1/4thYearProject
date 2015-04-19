@@ -286,9 +286,8 @@ public class Match implements Serializable {
     {
 
     }
-    public Match(long d, String t, String o, boolean b)
+    public Match(String t, String o, boolean b)
     {
-        setMatchDate(d);
         setTeam(t);
         setOppostion(o);
         setFootball(b);

@@ -76,29 +76,32 @@ namespace WEService.Controllers
                 DateTime today = DateTime.Today;
                 if (date.Date == today.Date && m.football == true)
                 {
-                    int g = 0;
-                    int p = 0;
-                    foreach(var s in db.Scores)
+                    if (m.fullTime == false)
                     {
-                        if(s.matchId == m.matchId)
+                        int g = 0;
+                        int p = 0;
+                        foreach (var s in db.Scores)
                         {
-                            if(s.goal == true)
+                            if (s.matchId == m.matchId)
                             {
-                                g++;
-                            }
-                            else
-                            {
-                                p++;
+                                if (s.goal == true)
+                                {
+                                    g++;
+                                }
+                                else
+                                {
+                                    p++;
+                                }
                             }
                         }
-                    }
 
-                    list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                    }
                 }
             }
             if(!list.Any())
             {
-                list.Add("No matches played today");
+                list.Add("No matches currently being played");
             }
             return list;
         }
@@ -125,32 +128,141 @@ namespace WEService.Controllers
                 DateTime today = DateTime.Today;
                 if (date.Date == today.Date && m.football == false)
                 {
-                    int g = 0;
-                    int p = 0;
-                    foreach (var s in db.Scores)
+                    if(m.fullTime == false)
                     {
-                        if (s.matchId == m.matchId)
+                        int g = 0;
+                        int p = 0;
+                        foreach (var s in db.Scores)
                         {
-                            if (s.goal == true)
+                            if (s.matchId == m.matchId)
                             {
-                                g++;
-                            }
-                            else
-                            {
-                                p++;
+                                if (s.goal == true)
+                                {
+                                    g++;
+                                }
+                                else
+                                {
+                                    p++;
+                                }
                             }
                         }
-                    }
 
-                    list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                    }
                 }
             }
             if (!list.Any())
             {
-                list.Add("No matches played today");
+                list.Add("No matches currently being played");
             }
             return list;
-        } 
+        }
+ 
+        // Results
+        // GET: api/Matches/results/hurling
+        [ResponseType(typeof(List<String>))]
+        [Route("results/hurling")]
+        public List<String> GetResultHurling()
+        {
+
+
+            List<String> list = new List<string>();
+            List<Match> mList = new List<Match>();
+            foreach (var row in db.Matches)
+            {
+                mList.Add(row);
+            }
+
+            foreach (Match m in mList)
+            {
+                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                long l = m.matchDate;
+                DateTime date = start.AddMilliseconds(l);
+                DateTime today = DateTime.Today;
+                if (date.Date == today.Date && m.football == false)
+                {
+                    if (m.fullTime == true)
+                    {
+                        int g = 0;
+                        int p = 0;
+                        foreach (var s in db.Scores)
+                        {
+                            if (s.matchId == m.matchId)
+                            {
+                                if (s.goal == true)
+                                {
+                                    g++;
+                                }
+                                else
+                                {
+                                    p++;
+                                }
+                            }
+                        }
+
+                        list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                    }
+                }
+            }
+            if (!list.Any())
+            {
+                list.Add("No match results");
+            }
+            return list;
+        }
+
+        // Results
+        // GET: api/Matches/results/hurling
+        [ResponseType(typeof(List<String>))]
+        [Route("results/football")]
+        public List<String> GetResultFootball()
+        {
+
+
+            List<String> list = new List<string>();
+            List<Match> mList = new List<Match>();
+            foreach (var row in db.Matches)
+            {
+                mList.Add(row);
+            }
+
+            foreach (Match m in mList)
+            {
+                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                long l = m.matchDate;
+                DateTime date = start.AddMilliseconds(l);
+                DateTime today = DateTime.Today;
+                if (date.Date == today.Date && m.football == true)
+                {
+                    if (m.fullTime == true)
+                    {
+                        int g = 0;
+                        int p = 0;
+                        foreach (var s in db.Scores)
+                        {
+                            if (s.matchId == m.matchId)
+                            {
+                                if (s.goal == true)
+                                {
+                                    g++;
+                                }
+                                else
+                                {
+                                    p++;
+                                }
+                            }
+                        }
+
+                        list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                    }
+                }
+            }
+            if (!list.Any())
+            {
+                list.Add("No match results");
+            }
+            return list;
+        }
 
         
         // PUT: api/Matches/5
