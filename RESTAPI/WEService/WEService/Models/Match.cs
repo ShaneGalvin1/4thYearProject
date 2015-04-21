@@ -15,6 +15,7 @@ namespace WEService.Models
         public int matchId { get; set; }
 
         public long matchDate { get; set; }
+        public bool home { get; set; }
         public String team { get; set; }
         public String oppostion { get; set; }
         public bool football { get; set; }
@@ -34,6 +35,8 @@ namespace WEService.Models
         public int scoresFromFouls { get; set; }
         public int blocks { get; set; }
         public int hooks { get; set; }
+        public int yellows { get; set; }
+        public int reds { get; set; }
         // Passing
         public int successfulPasses { get; set; }
         public int unsuccessfulPasses { get; set; }

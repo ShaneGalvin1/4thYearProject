@@ -198,9 +198,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503310119283_Initial.cs" />
-    <Compile Include="Migrations\201503310119283_Initial.Designer.cs">
-      <DependentUpon>201503310119283_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201504202141481_initial.cs" />
+    <Compile Include="Migrations\201504202141481_initial.Designer.cs">
+      <DependentUpon>201504202141481_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Match.cs" />
@@ -270,8 +270,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503310119283_Initial.resx">
-      <DependentUpon>201503310119283_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504202141481_initial.resx">
+      <DependentUpon>201504202141481_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

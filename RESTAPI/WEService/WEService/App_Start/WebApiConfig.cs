@@ -12,7 +12,7 @@ namespace WEService
         {
             // Web API configuration and services
             config.MapHttpAttributeRoutes();
-            
+
             var corsAttr = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(corsAttr);
 

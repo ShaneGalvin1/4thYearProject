@@ -30,7 +30,7 @@ public class SetupActivity extends ActionBarActivity {
     private User mUser;
     private Session mSession;
 
-    private RadioButton mRadioFootball;
+    private RadioButton mRadioFootball, mRadioHome;
     private CheckBox mCheckboxStats;
     private EditText mHomeTeam, mAwayTeam;
     private Button mSetupConfirm;
@@ -46,6 +46,8 @@ public class SetupActivity extends ActionBarActivity {
         mRadioFootball = (RadioButton) findViewById(R.id.radio_football);
 
         mCheckboxStats = (CheckBox) findViewById(R.id.check_stats);
+
+        mRadioHome = (RadioButton) findViewById(R.id.radio_home);
 
         mHomeTeam = (EditText) findViewById(R.id.homeTeam);
         mAwayTeam = (EditText) findViewById(R.id.awayTeam);
@@ -88,7 +90,7 @@ public class SetupActivity extends ActionBarActivity {
                         b = true;
                     }
 
-                    Match m = new Match(h,a,b);
+                    Match m = new Match(h,a,b,true);
                     m.setUserId(mUser.getUserId());
                     if(!mCheckboxStats.isChecked())
                     {
@@ -103,6 +105,15 @@ public class SetupActivity extends ActionBarActivity {
                     }
                     else
                     {
+                        if(mRadioHome.isChecked()) {
+                            m.setHome(true);
+                        } else {
+                            m.setTeam(a);
+                            m.setOppostion(h);
+                            m.setHome(false);
+                        }
+
+
                         // Finish this activity
                         finish();
 

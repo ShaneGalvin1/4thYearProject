@@ -13,11 +13,12 @@ namespace WEService.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
+
         protected override void Seed(WEService.Models.WEServiceContext context)
         {
             context.Users.AddOrUpdate(x => x.userId,
-        new User() { userId = 1, email = "email@gmail.com", password = "password" },
-        new User() { userId = 2, email = "example@gmail.com", password = "password" }
+        new User() { userId = 1, email = "admin@we.com", password = "?iv??A\u0004\u0015??\b?M?\u0015??g??s?K??\u001fo*?H?\u0018" }
+        
         );
 
             context.Scores.AddOrUpdate(x => x.scoreId,
@@ -68,6 +69,7 @@ namespace WEService.Migrations
                 {
                     matchId = 1,
                     //matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
+                    home = true,
                     team = "Team 2",
                     oppostion = "Team 1",
                     football = true,
@@ -83,6 +85,8 @@ namespace WEService.Migrations
                     scoresFromFouls = 7,
                     blocks = 3,
                     hooks = 4,
+                    yellows = 10,
+                    reds = 1,
                     successfulPasses = 47,
                     unsuccessfulPasses = 24,
                     successfulHandPasses = 16,
@@ -96,6 +100,7 @@ namespace WEService.Migrations
                 new Match()
                 {
                     matchId = 2,
+                    home = true,
                     //matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
                     team = "Team 3",
                     oppostion = "Team 2",
@@ -112,6 +117,8 @@ namespace WEService.Migrations
                     scoresFromFouls = 7,
                     blocks = 3,
                     hooks = 4,
+                    yellows = 4,
+                    reds = 0,
                     successfulPasses = 47,
                     unsuccessfulPasses = 24,
                     successfulHandPasses = 16,
@@ -125,6 +132,7 @@ namespace WEService.Migrations
                 new Match()
                 {
                     matchId = 3,
+                    home = true,
                     //matchTime = new DateTime(2014, 03, 02, 10, 30, 52),
                     team = "Team 1",
                     oppostion = "Team 3",
@@ -141,6 +149,8 @@ namespace WEService.Migrations
                     scoresFromFouls = 7,
                     blocks = 3,
                     hooks = 4,
+                    yellows = 4,
+                    reds = 0,
                     successfulPasses = 47,
                     unsuccessfulPasses = 24,
                     successfulHandPasses = 16,

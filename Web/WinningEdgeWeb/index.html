@@ -1,10 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
-
-<publishData><publishProfile profileName="winningedge - Web Deploy" publishMethod="MSDeploy" publishUrl="winningedge.scm.azurewebsites.net:443" msdeploySite="winningedge" userName="$winningedge" userPWD="2PtbwHQjHnnJCJW71lePn4mWJx1zqqCHNAZh3d6uy3G3rgi4PvYXFsJovT6n" destinationAppUrl="http://winningedge.azurewebsites.net" SQLServerDBConnectionString="" mySQLDBConnectionString="" hostingProviderForumLink="" controlPanelLink="http://windows.azure.com" webSystem="WebSites"><databases/></publishProfile><publishProfile profileName="winningedge - FTP" publishMethod="FTP" publishUrl="ftp://waws-prod-db3-023.ftp.azurewebsites.windows.net/site/wwwroot" ftpPassiveMode="True" userName="winningedge\$winningedge" userPWD="2PtbwHQjHnnJCJW71lePn4mWJx1zqqCHNAZh3d6uy3G3rgi4PvYXFsJovT6n" destinationAppUrl="http://winningedge.azurewebsites.net" SQLServerDBConnectionString="" mySQLDBConnectionString="" hostingProviderForumLink="" controlPanelLink="http://windows.azure.com" webSystem="WebSites"><databases/></publishProfile></publishData>
-
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -203,7 +200,7 @@
 						   
 			    <a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-home"></span>     Home</a>
 			    <a class="navbar-brand page-scroll" href="#gallery" ><span class="glyphicon glyphicon-picture"></span>     Gallery</a>
-			    <a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-envelope"></span>     Contact</a>
+			    <a class="navbar-brand page-scroll" href="#contact" ><span class="glyphicon glyphicon-envelope"></span>     Contact</a>
 				
             </div>
 			<div class="nav pull-right">
@@ -271,7 +268,7 @@
                         <h3>Feature Label</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a> <a href="#" class="btn btn-default">More Info</a>
                         </p>
                     </div>
                 </div>
@@ -284,7 +281,7 @@
                         <h3>Feature Label</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a> <a href="#" class="btn btn-default">More Info</a>
                         </p>
                     </div>
                 </div>
@@ -297,7 +294,7 @@
                         <h3>Feature Label</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a> <a href="#" class="btn btn-default">More Info</a>
                         </p>
                     </div>
                 </div>
@@ -310,7 +307,7 @@
                         <h3>Feature Label</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a> <a href="#" class="btn btn-default">More Info</a>
                         </p>
                     </div>
                 </div>
@@ -378,6 +375,22 @@
 			</div>			
 		</div>
 
+        <hr />
+
+        <div class="row" id="contact">
+            <div class="col-lg-12">
+                <h3>Contact</h3>
+            </div>
+        </div>
+        <div class="jumbotron hero-spacer">
+
+            <div id="test">
+                <h2>Contact</h2>
+            </div>
+        </div>
+
+        <hr />
+
 	
 <!-- Footer -->
         <footer>
@@ -399,29 +412,43 @@
 	<script>
 	$(document).ready(function() {
 		$("#login").click(function(){
+			event.preventDefault();
 			$('#password-error').hide();
-			$('#email-error').hide();
+			$('#email-error').hide();			
 			// do something when clicked
-			$.post("http://weservice.azurewebsites.net/api/Users/login", { userId: 0, email: $('#email').val(), password: $('#password').val() }, function(data, status){
+			$.post("http://weservice.azurewebsites.net/api/Users/login", { userId: 0, email: $('#email').val(), password: $('#password').val() },
+                function (data, status) {
+				
 				if(data.email == "ok")
 				{
 					// Password wrong
 					$('#password-error').fadeIn();
+					return false;
 				}
 				else if(data.email == "")
 				{
 					// wrong email
 					$('#email-error').fadeIn();
-					
+					return false;
 				}
 				else if(data.userId > 0)
 				{
-					window.location = "main.html"
-					
+					window.location.href = "main.html";
+					// Check browser support
+					if (typeof(Storage) != "undefined") {
+						// Store
+						localStorage.setItem("userId", data.userId);
+						
+					} else {
+						alert = "Please download the latest version of your web browser to continue";
+					}
+					return false;
 				}
+				return false;
 			});
 		});	
 	});
+
 	</script>
 
 </body>

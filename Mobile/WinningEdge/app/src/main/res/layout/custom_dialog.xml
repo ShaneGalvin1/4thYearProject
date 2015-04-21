@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/play"
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <View android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:checkedButton="@+id/radioPlay"
+                android:layout_gravity="center_horizontal">
+
+            <View android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/inPlay"
+                        android:id="@+id/radioPlay"
+                        android:padding="5dp"/>
+
+            <View android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/deadBall"
+                        android:id="@+id/radioDead"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="5dp"/>
+
+            <View android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+                </RadioGroup>
+        <View android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="20dp"
+            android:text="@string/distance"
+            android:id="@+id/textView6"
+            android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <View android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:checkedButton="@+id/radioD21"
+            android:layout_gravity="center_horizontal">
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/d21"
+            android:id="@+id/radioD21"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/d45"
+            android:id="@+id/radioD45"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/d45Plus"
+            android:id="@+id/radioD45Plus"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"/>
+
+
+        </RadioGroup>
+        <View android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        </LinearLayout>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:text="@string/confirm"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rounded_button"/>
+</LinearLayout>

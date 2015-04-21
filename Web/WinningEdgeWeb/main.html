@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,84 +25,7 @@
     <![endif]-->
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script>
-	$(document).ready(function(){			
-			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/football", function(data, status){
-				
-				var ul = $('<ul>');
-				var info = data[0];
-				jQuery.each(data, function(i, val) {
-					info += '\n' + data[i+1];
-					ul.append(
-						$(document.createElement('li')).text(data[i])
-					);
-				});
-				$('#foot').html(ul);
-			});
-		});
-	</script>
 	
-	<script>
-	$(document).ready(function(){			
-			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/hurling", function(data, status){
-				var ul = $('<ul>');
-				var info = data[0];
-				jQuery.each(data, function(i, val) {
-					info += '\n' + data[i+1];
-					ul.append(
-						$(document.createElement('li')).text(data[i])
-					);
-				});
-				$('#hurl').html(ul);
-			});
-		});
-	</script>
-	
- 
-	<script>
-	setInterval(function() {
-		$(document).ready(function(){			
-			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/football", function(data, status){
-				var ul = $('<ul>');
-				var info = data[0];
-				jQuery.each(data, function(i, val) {
-					info += '\n' + data[i+1];
-					ul.append(
-						$(document.createElement('li')).text(data[i])
-					);
-				});
-				$('#foot').html(ul);
-			});
-		});
-	}, 3000);
-	</script>
-	<script>
-	setInterval(function() {
-		$(document).ready(function(){			
-			$.getJSON("http://weservice.azurewebsites.net/api/Matches/live/hurling", function(data, status){
-				var ul = $('<ul>');
-				var info = data[0];
-				jQuery.each(data, function(i, val) {
-					info += '\n' + data[i+1];
-					ul.append(
-						$(document.createElement('li')).text(data[i])
-					);
-				});
-				$('#hurl').html(ul);
-			});
-		});
-	}, 3000);
-	
-	</script>
-	<script>
-	function login() {
-		var data = "{ userId: 0, email: " + email + ", password: " + password +" }";
-		$.post("http://weservice.azurewebsites.net/api/Users/login", { userId: 0, email: "email@gmail.com", password: "password" }, function(data, status){
-			window.location.href = "main.html"
-		});
-	}
-	</script>
-
 
 </head>
 
@@ -113,29 +36,21 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Login</a>
+                </button>						   
+			    <a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-user"></span>    Admin</a>			    				
             </div>
+			<div class="nav pull-right">
+				<a class="navbar-brand page-scroll" href="#gallery" ><span class="glyphicon glyphicon-picture"></span>     Gallery</a>
+			    <a class="navbar-brand page-scroll" href="#contact" ><span class="glyphicon glyphicon-tasks"></span>     Stats</a>
+				<a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-star"></span>     Tips</a>
+				</div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>

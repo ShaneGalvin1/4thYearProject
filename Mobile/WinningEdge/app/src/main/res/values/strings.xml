@@ -23,8 +23,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_setup">SetupActivity</string>
 
-    <string name="error_server_side">An Error Occurred, Please Try Again Later</string>
-    <string name="error_email">Email does not exist for any user</string>
+    <string name="error_server_side">Error: Please Try Again Later</string>
+    <string name="error_email">No User with this Email</string>
     <string name="error_password">Incorrect Password</string>
 
 
@@ -49,5 +49,36 @@
     <string name="log">Already Registered?</string>
     <string name="log_here"><u>Login Here</u></string>
 
+    <string name="timer">00:00</string>
+    <string name="wides">Wides</string>
+    <string name="shorts">Shorts</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+
+    <string name="dialogTitle">Score Options</string>
+    <string name="play">Score From:</string>
+    <string name="inPlay">In Play</string>
+    <string name="deadBall">Dead Ball</string>
+
+    <string name="distance">Score Distance:</string>
+    <string name="d21">Inside 21</string>
+    <string name="d45">Inside 45</string>
+    <string name="d45Plus">Outside 45</string>
+
+    <string name="fouls">Fouls</string>
+    <string name="fromFouls">Scores From Fouls</string>
+    <string name="blocks">Blocks</string>
+    <string name="hooks">Hooks</string>
+    <string name="yellows">Yellows</string>
+    <string name="reds">Reds</string>
+
+    <string name="sPasses">Successful Passes</string>
+    <string name="uPasses">Unsuccessful Passes</string>
+    <string name="sHPasses">Successful Hand Passes</string>
+    <string name="uHPasses">Unsuccessful Hand Passes</string>
+    <string name="ownWon">Restarts Won</string>
+    <string name="ownLost">Restarts Lost</string>
+    <string name="oppWon">Opp. Restarts Won</string>
+    <string name="oppLost">Opp. Restarts Lost</string>
 
 </resources>

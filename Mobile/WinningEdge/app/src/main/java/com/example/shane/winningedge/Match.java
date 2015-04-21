@@ -50,6 +50,15 @@ public class Match implements Serializable {
         return matchDate;
     }
 
+    private boolean home;
+    public void setHome(boolean b)
+    {
+        this.home = b;
+    }
+    public boolean getHome()
+    {
+        return home;
+    }
 
     private String team;
     public void setTeam(String s)
@@ -202,6 +211,14 @@ public class Match implements Serializable {
     {
         return hooks;
     }
+
+    private int yellows;
+    public void setYellows(int in) { this.yellows = in; }
+    public int getYellows() { return yellows; }
+
+    private int reds;
+    public void setReds(int in) { this.reds = in; }
+    public int getReds() { return reds; }
     // Passing
     private int successfulPasses;
     public void setSuccessfulPasses(int in)
@@ -286,11 +303,12 @@ public class Match implements Serializable {
     {
 
     }
-    public Match(String t, String o, boolean b)
+    public Match(String t, String o, boolean b, boolean h)
     {
         setTeam(t);
         setOppostion(o);
         setFootball(b);
+        setHome(h);
         setFullTime(false);
         setInPlay(false);
         setHalfTime(false);

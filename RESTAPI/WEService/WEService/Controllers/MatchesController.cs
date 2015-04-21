@@ -94,8 +94,14 @@ namespace WEService.Controllers
                                 }
                             }
                         }
-
-                        list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        if (!m.home)
+                        {
+                            list.Add(m.oppostion + " " + m.oppGoals + " - " + m.oppPoints + " vs. " + g + " - " + p + " " + m.team);
+                        }
+                        else
+                        {
+                            list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        }
                     }
                 }
             }
@@ -146,8 +152,14 @@ namespace WEService.Controllers
                                 }
                             }
                         }
-
-                        list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        if (!m.home)
+                        {
+                            list.Add(m.oppostion + " " + m.oppGoals + " - " + m.oppPoints + " vs. " + g + " - " + p + " " + m.team);
+                        }
+                        else
+                        {
+                            list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        }
                     }
                 }
             }
@@ -199,8 +211,14 @@ namespace WEService.Controllers
                                 }
                             }
                         }
-
-                        list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        if (!m.home)
+                        {
+                            list.Add(m.oppostion + " " + m.oppGoals + " - " + m.oppPoints + " vs. " + g + " - " + p + " " + m.team);
+                        }
+                        else
+                        {
+                            list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        }
                     }
                 }
             }
@@ -252,8 +270,15 @@ namespace WEService.Controllers
                                 }
                             }
                         }
-
-                        list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        if(!m.home)
+                        {
+                            list.Add(m.oppostion + " " + m.oppGoals + " - " + m.oppPoints + " vs. " + g + " - " + p + " " + m.team);
+                        }
+                        else
+                        {
+                            list.Add(m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion);
+                        }
+                        
                     }
                 }
             }

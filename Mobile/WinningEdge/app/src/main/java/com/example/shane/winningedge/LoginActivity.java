@@ -393,6 +393,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             if(u.getEmail().equals("REST"))
             {
                 mEmailView.setError(getString(R.string.error_server_side));
+                focusView = mEmailView;
                 focusView.requestFocus();
                 mAuthTask = null;
                 showProgress(false);
@@ -400,6 +401,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             if(u.getEmail().equals("HTTP"))
             {
                 mEmailView.setError(getString(R.string.error_server_side));
+                focusView = mEmailView;
                 focusView.requestFocus();
                 mAuthTask = null;
                 showProgress(false);
@@ -408,6 +410,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             if(u.getEmail() == null || u.getEmail().isEmpty())
             {
                 mEmailView.setError(getString(R.string.error_email));
+                focusView = mEmailView;
                 focusView.requestFocus();
                 mAuthTask = null;
                 showProgress(false);
@@ -415,6 +418,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             else if(u.getEmail().equals("ok"))
             {
                 mPasswordView.setError(getString(R.string.error_password));
+                focusView = mEmailView;
                 focusView.requestFocus();
                 mAuthTask = null;
                 showProgress(false);
@@ -481,6 +485,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 mAuthTask = null;
                 showProgress(false);
                 mEmailView.setError(getString(R.string.error_server_side));
+                focusView = mEmailView;
                 focusView.requestFocus();
             }
             else
@@ -532,19 +537,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         protected void onPostExecute(String s) {
             if(s.equals("Exists")) {
                 // Email exists
-                View focusView = mEmailView;
+                View focusView = null;
                 mAuthTaskReg = null;
                 showProgress(false);
                 mEmailView.setError(getString(R.string.error_email_exists));
+                focusView = mEmailView;
                 focusView.requestFocus();
             } else if(s.equals("Available")) {
                 // Email is Available
-                User u = new User();
+                View focusView = null;
+                User user = new User();
                 showProgress(true);
-                u.setEmail(u.getEmail());
-                u.setPassword(u.getPassword());
-                mAuthTaskReg = new UserRegister(u);
-                mAuthTaskReg.execute((Void) null);
+                user.setEmail(u.getEmail());
+                user.setPassword(u.getPassword());
+                mAuthTaskReg = new UserRegister(user);
+                mAuthTaskReg.execute();
             } else if(s.equals("HTTP Error")) {
                 // HTTP Error
                 mAuthTaskReg = null;

@@ -49,7 +49,6 @@ public class MainActivity extends ActionBarActivity {
 
         Intent i = getIntent();
         m = (Match) i.getSerializableExtra("Match");
-        //new CreateMatch(this).execute();
 
         // Button Click Events
         homeGoal = (Button) findViewById(R.id.homeGoal);
