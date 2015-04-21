@@ -25,7 +25,48 @@
     <![endif]-->
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>
+
+	$(document).ready(function() {
+		
+		var userId = parseInt(localStorage["userId"]);
+			
+		if(userId) {
+			// ID is present
+			
+			// GET Function
+			$('#test').text("UserId: " + userId);
+		}
+		else {
+			alert("You must login to proceed");
+			window.location.href = "index.html";
+		}			
+			
+	});
+	</script>
+	<script>
+	window.onload = function() {
+	var a = document.getElementById("logout");
+		a.onclick = function() {
+			alert("Logging Out");
+			localStorage["userId"] = 0;
+		};
+		
+	}
+
+	</script>
 	
+	<script>
+	$(document).ready(function(){	
+		var userId = parseInt(localStorage["userId"]);
+			$.getJSON("http://weservice.azurewebsites.net/api/Users/" +userId, function(data, status){
+				//alert(data.email);
+				var div = $('<a class="navbar-brand page-scroll" href="index.html" id="logout"><span class="glyphicon glyphicon-user"></span> '+data.email+'</a>');
+				//div.append.text(data.email + '</a>');
+				$('#email').html(div);
+			});
+		});
+	</script>
 
 </head>
 
@@ -42,12 +83,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>						   
-			    <a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-user"></span>    Admin</a>			    				
+                </button>
+				<div id="email">
+				
+				</div>				
+			     			    				
             </div>
 			<div class="nav pull-right">
 				<a class="navbar-brand page-scroll" href="#gallery" ><span class="glyphicon glyphicon-picture"></span>     Gallery</a>
-			    <a class="navbar-brand page-scroll" href="#contact" ><span class="glyphicon glyphicon-tasks"></span>     Stats</a>
+			    <a class="navbar-brand page-scroll" href="#contact" ><span class="glyphicon glyphicon-stats"></span>     Stats</a>
 				<a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-star"></span>     Tips</a>
 				</div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -69,6 +113,7 @@
 			<p id="hurl"> </p>
 			
 			<h3>Test</h3>
+			<button class="btn btn-primary btn-lg btn-block" id="call">Test</button>
 			<p id="test"> </p>
 			
         </header>

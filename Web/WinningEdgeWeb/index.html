@@ -263,12 +263,12 @@
 
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
+                    <img src="Register.png" alt="">
                     <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <h3>Register</h3>
+                        <p>Register as a User with the Winning Edge Android Application. Its quick and simple, no fuss!</p>
                         <p>
-                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a>
                         </p>
                     </div>
                 </div>
@@ -276,12 +276,24 @@
 
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
+                    <img src="Setup.png" alt="">
                     <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <h3>Match Setup</h3>
+                        <p>Setup to record hurling or football, as well as the option to record statistics for a chosen team</p>
                         <p>
-                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="RecordScore.png" alt="">
+                    <div class="caption">
+                        <h3>Attacking Statistics</h3>
+                        <p>Record a variety of attacking statistics, including details about each score.</p>
+                        <p>
+                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a>
                         </p>
                     </div>
                 </div>
@@ -289,25 +301,12 @@
 
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
+                    <img src="RecordTackling.png" alt="">
                     <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <h3>Defensive Statistics</h3>
+                        <p>Winning Edge also allows you to record a variety of defensive statistics for your team.</p>
                         <p>
-                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="https://play.google.com/store/apps" class="btn btn-primary">Download Now</a>
                         </p>
                     </div>
                 </div>
@@ -330,14 +329,14 @@
 		<div class="panel-group" id="accordion">
 			<div class="panel panel-default" id="panel1">
 				<div class="panel-heading">
-					 <h3 class="panel-title">
+					 <h2 class="panel-title">
 						<a data-toggle="collapse" data-target="#collapseOne" 
-						   href="#collapseOne" class="collapsed">
+						   href="#collapseOne" class="collapsed" style="text-decoration:none">
 						   <img src="we_icon.png" alt="trophy icon" style="width:30px;height:30px">
 						  Login
 						</a>
 						
-					</h3>
+					</h2>
 				</div>
 				
 				<div id="collapseOne" class="panel-collapse collapse">
@@ -384,8 +383,9 @@
         </div>
         <div class="jumbotron hero-spacer">
 
-            <div id="test">
-                <h2>Contact</h2>
+            <div id="dev">
+				<p><span class="glyphicon glyphicon-education"></span> Developer: Both the Android and Web Applications were developed by Shane Galvin,<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a 4th year Computing student in I.T.T.Dublin.</p>
             </div>
         </div>
 
@@ -437,7 +437,7 @@
 					// Check browser support
 					if (typeof(Storage) != "undefined") {
 						// Store
-						localStorage.setItem("userId", data.userId);
+						localStorage["userId"] = data.userId;
 						
 					} else {
 						alert = "Please download the latest version of your web browser to continue";
