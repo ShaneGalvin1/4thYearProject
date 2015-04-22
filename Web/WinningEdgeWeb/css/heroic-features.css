@@ -12,7 +12,9 @@
 .nav-right {
 	float: right;
 }
-
+.dropdown-menu {
+	margin-left: 290px;
+}
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 	
@@ -23,11 +25,12 @@ body {
 }
 
 .hero-spacer {
-	
+	border: 1px solid black;
 }
 
 .hero-feature {
     margin-bottom: 30px;
+	
 	
 }
 
@@ -62,7 +65,7 @@ footer {
     border: solid 2px #000000;
     font-size: 20px;
 	text-align: center;
-    color: #088da5;
+    color: #1a9ff0;
     background: 0 0;
     transition: all .3s ease-in-out;
 }
@@ -71,7 +74,7 @@ footer {
 .btn-outline:focus,
 .btn-outline:active,
 .btn-outline.active {
-    border: solid 2px #088da5;
+    border: solid 2px #1a9ff0;
     color: #fff;
     background: #000000;
 }
@@ -91,4 +94,17 @@ footer {
 .btn:active,
 .btn.active {
     outline: 0;
+}
+
+#dev ul {
+	list-style: square;
+	font-size: 16px;
+}
+#tipList ul {
+	list-style: square;
+	font-size: 16px;
+}
+
+.list-inline {
+	text-align: center;
 }

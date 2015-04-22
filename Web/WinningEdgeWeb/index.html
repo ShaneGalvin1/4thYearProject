@@ -19,6 +19,8 @@
 	
 	<!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -110,7 +112,7 @@
 						$(document.createElement('li')).text(data[i])
 					);
 				});
-				$('#footR').html(ul);
+				$('#footR').html(res);
 			});
 		});
 	</script>
@@ -200,8 +202,9 @@
 						   
 			    <a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-home"></span>     Home</a>
 			    <a class="navbar-brand page-scroll" href="#gallery" ><span class="glyphicon glyphicon-picture"></span>     Gallery</a>
-			    <a class="navbar-brand page-scroll" href="#contact" ><span class="glyphicon glyphicon-envelope"></span>     Contact</a>
-				
+				<a class="navbar-brand page-scroll" href="#about" ><span class="glyphicon glyphicon-question-sign"></span>     About Us</a>
+			    <a class="navbar-brand page-scroll" data-toggle="collapse" data-target="#collapseTwo" 
+						   href="#collapseTwo" ><span class="glyphicon glyphicon-envelope"></span>     Contact</a>				
             </div>
 			<div class="nav pull-right">
 				<a class="navbar-brand page-scroll" data-toggle="collapse" data-target="#collapseOne" 
@@ -376,18 +379,102 @@
 
         <hr />
 
-        <div class="row" id="contact">
+        <div class="row" id="about">
             <div class="col-lg-12">
-                <h3>Contact</h3>
+                <h3>About Us</h3>
             </div>
         </div>
         <div class="jumbotron hero-spacer">
 
             <div id="dev">
-				<p><span class="glyphicon glyphicon-education"></span> Developer: Both the Android and Web Applications were developed by Shane Galvin,<br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a 4th year Computing student in I.T.T.Dublin.</p>
+				<p><span class="glyphicon glyphicon-phone"></span> Mobile Application:</p>
+				<ul>
+					<li>Available on Android Platform.
+					<li>Users can register using the Android Application.
+					<li>Once registered, users can record scores for a match they are watching.
+					<li>Optionally if the user is involved with a team they may choose to record statistics for a chosen team in the match.					
+				</ul>
+		
+				<br>
+				<br>
+				<p><span class="glyphicon glyphicon-globe"></span> Web Application:</p>
+				<ul>
+					<li>The live scores feature of the Winning Edge Web Application allows anyone to view live scores and results from G.A.A. matches recorded today.
+					<li>If a registered user of the Android Application, a user may choose to login.
+					<li>Once signed in, a user is brought to their home page, where and statistics they have recorded will be displayed.
+					<li>Statistics are displayed in a manner which allows the user to gain maximum benefit and provide feedback to the team.			
+				</ul>
+				<br>
+				<br>
+				<p><span class="glyphicon glyphicon-education"></span> Developer:</p>
+				<ul>
+					<li>Both the Android and Web Applications were developed by Shane Galvin.
+					<li>Contact Shane through any of the following links.
+				</ul>
+				<ul class="list-inline">
+                            <li>
+                                <a href="https://www.facebook.com/shane.galvin.7" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                            </li>
+
+                            <li>
+                                <a href="https://twitter.com/Shane__Galvin" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/pub/shane-galvin/a5/735/630" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+				<br>				
+			</div>
+        </div>
+		
+		
+		<div class="row" id="contact">
+            <div class="col-lg-12">
+                <h3>Contact</h3>
             </div>
         </div>
+
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default" id="panel2">
+				<div class="panel-heading">
+					 <h2 class="panel-title">
+						<a data-toggle="collapse" data-target="#collapseTwo" 
+						   href="#collapseTwo" class="collapsed" style="text-decoration:none">
+						   <span class="glyphicon glyphicon-envelope"></span> 
+						  Contact Us
+						</a>
+						
+					</h2>
+				</div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+				<div class="panel-body">
+					<h1 class="text-center">Contact Winning Edge Support</h1>			
+						<form class="form col-md-12 center-block">
+								<div class="form-group">
+									<input type="text" class="form-control input-lg" placeholder="Name" id="name" required>
+								</div>
+					
+								<div class="form-group">
+									<input type="text" class="form-control input-lg" placeholder="Email" id="eContact" required>
+								</div>
+								
+								<div class="form-group" rows="4">
+									
+									<textarea class="form-control" rows="3" placeholder="Type your message here..." id="message" required></textarea>
+								</div>
+								<br>
+								<br>
+								<br>
+								<br>
+								<div class="form-group">
+									<button class="btn btn-primary btn-lg btn-block" id="send">Send</button>             
+								</div>
+							</form>
+							</div>
+					</div>			
+				</div>
+
+			</div>
 
         <hr />
 
@@ -446,6 +533,14 @@
 				}
 				return false;
 			});
+		});	
+	});
+
+	</script>
+	<script>
+	$(document).ready(function() {
+		$("#send").click(function()
+			
 		});	
 	});
 

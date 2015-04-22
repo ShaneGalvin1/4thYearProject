@@ -45,9 +45,9 @@
     <string name="point_start">00</string>
 
     <string name="new_reg">New to Winning Edge?</string>
-    <string name="link_reg"><u>Register Here</u></string>
+    <string name="link_reg">Register Here</string>
     <string name="log">Already Registered?</string>
-    <string name="log_here"><u>Login Here</u></string>
+    <string name="log_here">Login Here</string>
 
     <string name="timer">00:00</string>
     <string name="wides">Wides</string>

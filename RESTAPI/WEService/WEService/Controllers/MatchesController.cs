@@ -13,6 +13,7 @@ using System.Web.Http.Description;
 using WEService.Models;
 
 
+
 namespace WEService.Controllers
 {
     //[EnableCors(origins: "http://weservice.azurewebsites.net", headers: "*", methods: "*")]
@@ -20,6 +21,7 @@ namespace WEService.Controllers
     public class MatchesController : ApiController
     {
         private WEServiceContext db = new WEServiceContext();
+        //public ControlChars control = new ControlChars();
 
         // GET: api/Matches
         public IQueryable<Match> GetMatches()
@@ -288,6 +290,98 @@ namespace WEService.Controllers
             }
             return list;
         }
+
+        // GET: api/Matches/user/1
+        [ResponseType(typeof(List<Match>))]
+        [Route("user/{id:int}")]
+        public List<Match> getUserMatches(int id)
+        {
+            List<Match> mList = new List<Match>();
+            foreach(var row in db.Matches)
+            {
+                if(row.userId == id)
+                {
+                    mList.Add(row);
+                }
+            }
+            mList.Reverse();
+            return mList;
+        }
+        // GET: api/Matches/user/1
+        [ResponseType(typeof(String))]
+        [Route("score/{id:int}")]
+        public String getMatchScore(int id)
+        {
+            Match m = db.Matches.Find(id);
+            int g = 0;
+            int p = 0;
+            foreach (var s in db.Scores)
+            {
+                if (s.matchId == m.matchId)
+                {
+                    if (s.goal == true)
+                    {
+                        g++;
+                    }
+                    else
+                    {
+                        p++;
+                    }
+                }
+            }
+            String str = m.team + " " + g + " - " + p + " vs. " + m.oppGoals + " - " + m.oppPoints + " " + m.oppostion;
+            return str;
+        }
+
+        // GET: api/Matches/tips/1
+        [ResponseType(typeof(List<String>))]
+        [Route("tips/{id:int}")]
+        public List<String> getTips(int id)
+        {
+            Match m = new Match();
+            int scores = 0;
+            List<String> tipList = new List<String>();
+            foreach(var row in db.Matches)
+            {
+                if(row.userId == id)
+                {
+                    m = row;
+                }
+            }
+            foreach (var s in db.Scores)
+            {
+                if (s.matchId == m.matchId)
+                {
+                    scores++;
+                }
+            }
+            if(scores <= (m.shots * 0.66))
+            {
+                tipList.Add("Shot conversion rate was less than 66%, practice shooting in training.");
+            }
+            if(m.scoresFromFouls >= (m.oppGoals+m.oppPoints/2))
+            {
+                tipList.Add("More than 50% of the opposition scores were from fouls, practice tackling in training.");
+            }
+            if(m.oppGoals > 3)
+            {
+                tipList.Add("Opposition scored over 3 goals, practice defending the goal mouth in training.");
+            }
+            if(m.ownWon <= ((m.ownWon+m.ownLost)/2))
+            {
+                tipList.Add("Not winning enough of your own restarts, practice movement for restarts and breaking ball.");
+            }
+            if (m.successfulPasses <= ((m.successfulPasses+m.unsuccessfulHandPasses) * 0.75))
+            {
+                tipList.Add("Completed less than 75% of passes, practice kick passing in training.");
+            }
+            if(!tipList.Any())
+            {
+                tipList.Add("No tips for most recent match.");
+            }
+            return tipList;
+        }
+
 
         
         // PUT: api/Matches/5

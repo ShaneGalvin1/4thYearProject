@@ -16,6 +16,11 @@
 
     <!-- Custom CSS -->
     <link href="css/heroic-features.css" rel="stylesheet">
+	
+	<!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,7 +28,11 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-	
+	<script src="Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script>
 
@@ -33,14 +42,31 @@
 			
 		if(userId) {
 			// ID is present
-			
-			// GET Function
-			$('#test').text("UserId: " + userId);
 		}
 		else {
 			alert("You must login to proceed");
 			window.location.href = "index.html";
 		}			
+			
+	});
+	
+	</script>
+	<script>
+	$(document).ready(function() {
+		
+		var userId = parseInt(localStorage["userId"]);
+			
+		$.getJSON("http://weservice.azurewebsites.net/api/Matches/tips/" +userId, function(data, status){
+				var ul = $('<ul>');
+				var info = data[0];
+				jQuery.each(data, function(i, val) {
+					info += '\n' + data[i+1];
+					ul.append(
+						$(document.createElement('li')).text(data[i])
+					);
+				});
+				$('#tipList').html(ul);
+			});	
 			
 	});
 	</script>
@@ -60,13 +86,119 @@
 	$(document).ready(function(){	
 		var userId = parseInt(localStorage["userId"]);
 			$.getJSON("http://weservice.azurewebsites.net/api/Users/" +userId, function(data, status){
-				//alert(data.email);
-				var div = $('<a class="navbar-brand page-scroll" href="index.html" id="logout"><span class="glyphicon glyphicon-user"></span> '+data.email+'</a>');
-				//div.append.text(data.email + '</a>');
-				$('#email').html(div);
+				//var div = $('<a class="navbar-brand page-scroll" href="index.html" id="logout"><span class="glyphicon glyphicon-user"></span> '+data.email+'</a>');
+				var nav = '<a href="#" class="navbar-brand page-scroll" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> ' + data.email + '</a>';
+				$('#email').prepend(nav);
 			});
 		});
 	</script>
+	<script>
+	$(document).ready(function(){			
+			var userId = parseInt(localStorage["userId"]);			
+			$.getJSON("http://weservice.azurewebsites.net/api/Matches/user/" +userId, function(data, status){
+				$.each(data, function(i, obj){ 	
+				
+var c1 = '<header class="jumbotron hero-spacer"><div class="row" id="match"><div class="col-lg-12" style="text-align: center"><h3>Match Details</h3></div></div><div class="row" style="text-align: center; color: black"><div class="col-md-3"></div><div class="col-md-6" ><p>';				
+					var sport = data[i].football;
+					if(sport == true)
+					{
+						c1 += 'Football</p><p>';
+					}
+					else 
+					{
+						c1 += 'Hurling</p><p>';
+					}
+					
+					
+					$.each(obj, function(key, value){	
+						if(key == "matchId")
+						{
+							var id = parseInt(value);
+							$.ajaxSetup({'async': false});
+							$.getJSON("http://weservice.azurewebsites.net/api/Matches/score/"+id).done(function(data, status){
+								var str = data;
+								c1 += str+'</p></div><br><br><br><div class="col-md-3"></div></div><div class="row"><div class="col-md-4" style="text-align: center"><h3>Shooting</h3></div><div class="col-md-4" style="text-align: center"><h3>Tackling</h3></div><div class="col-md-4" style="text-align: center"><h3>Passing</h3></div></div><div class="col-md-4"><ul class="list-group"><li class="list-group-item"><span class="badge">';
+							
+							});	
+						}
+						
+						else if(key == "shots")
+						{
+							c1 += value + '</span>Shots</li><li class="list-group-item"><span class="badge">';
+						}
+						else if(key == "wides")
+						{
+							c1 += value + '</span>Wides</li><li class="list-group-item"><span class="badge">';
+						}
+						else if(key == "shorts")
+						{
+							c1 += value + '</span>Shorts</li></ul></div><div class="col-md-4"><ul class="list-group"><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "fouls")
+						{
+							c1 += value + '</span>Fouls</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "scoresFromFouls")
+						{
+							c1 += value + '</span>Scores From Fouls</li><li class="list-group-item"><span class="badge">';						
+						}
+						else if(key == "blocks")
+						{
+							c1 += value + '</span>Blocks</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "hooks" && sport == false)
+						{
+							c1 += value + '</span>Hooks</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "yellows")
+						{
+							c1 += value + '</span>Yellows</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "reds")
+						{
+							c1 += value + '</span>Reds</li></ul></div><div class="col-md-4"><ul class="list-group"><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "successfulPasses")
+						{
+							c1 += value + '</span>Successful Passes</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "unsuccessfulPasses")
+						{
+							c1 += value + '</span>Unsuccessful Passes</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "successfulHandPasses")
+						{
+							c1 += value + '</span>Successful Hand Passes</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "unsuccessfulHandPasses")
+						{
+							c1 += value + '</span>Unsuccessful Hand Passes</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "ownWon")
+						{
+							c1 += value + '</span>Own Restarts Won</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "ownLost")
+						{
+							c1 += value + '</span>Own Restarts Lost</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "oppWon")
+						{
+							c1 += value + '</span>Opp. Restarts Won</li><li class="list-group-item"><span class="badge">';							
+						}
+						else if(key == "oppLost")
+						{
+							c1 += value + '</span>Opp. Restarts Lost</li></ul></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></header><hr>';							
+						}					
+					});
+					$('#matches').append(c1);					
+				});
+				
+			});
+			
+		});
+	</script>
+	
 
 </head>
 
@@ -84,15 +216,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-				<div id="email">
-				
-				</div>				
+				<div id="email">					  
+					  <ul class="dropdown-menu" role="menu">
+						<li><a href="index.html" id="logout">Logout</a></li>
+					  </ul>
+				</div>	
+			
 			     			    				
             </div>
 			<div class="nav pull-right">
-				<a class="navbar-brand page-scroll" href="#gallery" ><span class="glyphicon glyphicon-picture"></span>     Gallery</a>
-			    <a class="navbar-brand page-scroll" href="#contact" ><span class="glyphicon glyphicon-stats"></span>     Stats</a>
-				<a class="navbar-brand page-scroll" href="#" ><span class="glyphicon glyphicon-star"></span>     Tips</a>
+				<a class="navbar-brand page-scroll" href="#" ><i class="fa fa-trophy"></i>     Matches</a>
+			    <a class="navbar-brand page-scroll" href="#analysis" ><span class="glyphicon glyphicon-stats"></span>     Analysis</a>
+				<a class="navbar-brand page-scroll" href="#tips" ><span class="glyphicon glyphicon-star"></span>     Tips</a>
 				</div>
             <!-- Collect the nav links, forms, and other content for toggling -->
         </div>
@@ -101,103 +236,66 @@
 
     <!-- Page Content -->
     <div class="container">
-        <!-- Jumbotron Header -->
-        <header class="jumbotron hero-spacer">
-            <h1>Winning Edge</h1>
-			<h2>Live Scores</h2>
+	
+	<img src="we_icon.png" alt="trophy icon" style="width:120px;height:120px" align="middle">	
+		<img src="winedgetext.png" alt="winning edge title" align="middle">	
 			
-			<h3>Football</h3>
-			<p id="foot"> </p>
-			
-			<h3>Hurling</h3>
-			<p id="hurl"> </p>
-			
-			<h3>Test</h3>
-			<button class="btn btn-primary btn-lg btn-block" id="call">Test</button>
-			<p id="test"> </p>
-			
-        </header>
+		<hr>
+	
+		<div class="row" id="match">
+			<div class="col-lg-12">
+				<h3>Matches</h3>
+			</div>
+		</div>
 		
-        <hr>
-
+		<div id="matches">
+		</div>
+	
+		<div class="row" id="analysis">
+			<div class="col-lg-12">
+				<h3>Analysis</h3>
+			</div>
+		</div>
+		
+		<header class="jumbotron hero-spacer">
+			<h4 style="text-align: center">Scores During 10 Minute Periods</h4>
+			<div id="stats">
+				Number of Scores
+				<canvas id="buyers" width="1000" height="400"></canvas>
+			</div>
+			<h5 style="text-align: center">Minutes</h5>
+		</header>
+		
+		
+		<hr>
+	
         <!-- Title -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Gallery</h3>
-            </div>
-        </div>
-        <!-- /.row -->
+        <div class="row" id="tips">
+			<div class="col-lg-12">
+				<h3>Tips</h3>
+			</div>
+		</div>
+        <header class="jumbotron hero-spacer">
+			<h4>Tips from most recent match</h4>
+			<div id="tipList">
+			</div>
+		</header>
 
-        <!-- Page Features -->
-        <div class="row text-center">
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- /.row -->
+        
 
         <hr>
 
         <!-- Footer -->
         <footer>
-            <div class="row">
+            <div class="row" style="text-align: center">
                 <div class="col-lg-12">
                     <p>Copyright &copy; Winning Edge 2015</p>
                 </div>
             </div>
         </footer>
+	</div>
 
-    </div>
+
 	
 
     <!-- jQuery -->
@@ -205,6 +303,38 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+	
+	<script>
+	var scores;
+	$(document).ready(function() {
+		
+		var userId = parseInt(localStorage["userId"]);
+		$.getJSON("http://weservice.azurewebsites.net/api/Scores/analysis/" +userId, function(data, status){
+				scores = data;
+				var buyerData = {
+	labels : ["0-9","10-19","20-29","30-39","40-49","50-59","60-70"],
+	datasets: [
+        {
+            label: "Scores in 10 minute periods",
+            fillColor: "rgba(50,205,50,0.2)",
+            strokeColor: "rgba(50,205,50,1)",
+            pointColor: "rgba(50,205,50,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(50,205,50,1)",
+            data: [scores[0],scores[1],scores[2],scores[3],scores[4],scores[5],scores[6]]
+        }
+    ]
+}
+    var buyers = document.getElementById('buyers').getContext('2d');
+    new Chart(buyers).Line(buyerData);
+			});		
+			
+	});
+
+	
+	
+	</script>
 
 </body>
 

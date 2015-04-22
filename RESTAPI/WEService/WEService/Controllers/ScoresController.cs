@@ -45,6 +45,71 @@ namespace WEService.Controllers
         {
             return db.Scores.Count()+1;
         }
+        // GET: api/Scores/analysis/1
+        [ResponseType(typeof(List<int>))]
+        [Route("analysis/{id:int}")]
+        public List<int> GetAnalysis(int id)
+        {
+            List<int> scoreCount = new List<int>();
+            int mId = 0;
+            int scores1 = 0;
+            int scores2 = 0;
+            int scores3 = 0;
+            int scores4 = 0;
+            int scores5 = 0;
+            int scores6 = 0;
+            int scores7 = 0;
+            
+            foreach (var row in db.Matches)
+            {
+                if (row.userId == id)
+                {
+                    mId = row.matchId;
+                }
+            }
+            foreach (var s in db.Scores)
+            {
+                if (s.matchId == mId)
+                {
+                    if(s.mins < 10)
+                    {
+                        scores1++;
+                    }
+                    else if(s.mins < 20 && s.mins >= 10)
+                    {
+                        scores2++;
+                    }
+                    else if (s.mins < 30 && s.mins >= 20)
+                    {
+                        scores3++;
+                    }
+                    else if (s.mins < 40 && s.mins >= 30)
+                    {
+                        scores4++;
+                    }
+                    else if (s.mins < 50 && s.mins >= 40)
+                    {
+                        scores5++;
+                    }
+                    else if (s.mins < 60 && s.mins >= 50)
+                    {
+                        scores6++;
+                    }
+                    else
+                    {
+                        scores7++;
+                    }
+                }
+            }
+            scoreCount.Add(scores1);
+            scoreCount.Add(scores2);
+            scoreCount.Add(scores3);
+            scoreCount.Add(scores4);
+            scoreCount.Add(scores5);
+            scoreCount.Add(scores6);
+            scoreCount.Add(scores7);
+            return scoreCount;
+        }
 
         // PUT: api/Scores/5
         [ResponseType(typeof(void))]
