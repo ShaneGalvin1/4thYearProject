@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -256,13 +257,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        //must be 4 or longer and be valid format
+        return isValidLength(email, 4, 255) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        // Must be 5 or longer and only contain
+        return isValidLength(password, 5, 255) && password.matches("[A-Za-z0-9!?.$%]*");
+    }
+    private boolean isValidLength(String value, int min, int max) {
+        return value.length() >= min && value.length() <= max;
     }
 
     /**
